@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}查詢課表{% endblock title%}
+{% block content %}
+    <meta charset="utf-8">
+    <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
+    <body>
+        <table class="table table-bordered">
+                <tr>
+                        <th>節次/星期</th>
+                        <th>星期一</th>
+                        <th>星期二</th>
+                        <th>星期三</th>
+                        <th>星期四</th>
+                        <th>星期五</th>
+                </tr>
+                <tr>
+                        <td>第一節</td>
+                        <td rowspan="2">通識教育</td>
+                        <td></td>
+                        <td></td>
+                        <td rowspan="3">微積分</td>
+                        <td rowspan="3"></td>
+                </tr>
+                <tr>
+                        <td>第二節</td>
+                        <td rowspan="2">離散數學</td>
+                        <td rowspan="2">英文(一)</td>
+                </tr>
+                <tr>
+                        <td>第三節</td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td>第四節</td>
+                        <td></td>
+                        <td rowspan="2">體育(一)</td>
+                        <td rowspan="3">計算機概論</td>
+                        <td rowspan="3">數位邏輯設計</td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td>第五節</td>
+                        <td></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td>第六節</td>
+                        <td></td>
+                        <td></td>
+                        <td rowspan="2">韻律教學法</td>
+                </tr>
+                <tr>
+                        <td>第七節</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                </tr>
+        </table>
+    </body>
+    <div class="container">
+            <div class="row">
+                <div class="col"><span>1</span></div>
+                <div class="col"><span>2</span></div>
+                <div class="col"><span>3</span></div>
+            </div>
+        </div>
+{% endblock content %}
