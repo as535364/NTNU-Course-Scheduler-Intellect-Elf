@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}註冊{% endblock title%}
+{% block content %}
+<form>
+    <div class="mb-3">
+        <label for="Username" class="form-label">使用者名稱</label>
+        <input type="text" class="form-control" id="Username">
+        <div id="emailHelp" class="form-text">使用者名稱會作為評價者的識別，並用於登入，長度必須小於 12 位的英數組合。</div>
+    </div>
+    <div class="mb-3">
+        <label for="Email1" class="form-label">Email</label>
+        <input type="email" class="form-control" id="Email1">
+        <div id="emailHelp" class="form-text">用於忘記密碼的認證信。</div>
+    </div>
+    <div class="mb-3">
+        <label for="Password" class="form-label">密碼</label>
+        <input type="password" class="form-control" id="Password1">
+    </div>
+    <div class="mb-3">
+        <label for="RepeatPassword" class="form-label">重複密碼</label>
+        <input type="password" class="form-control" id="RepeatPassword">
+    </div>
+    <div class="mb-3">
+        <label for="dept" class="form-label">科系</label>
+        <input type="text" class="form-control" id="dept">
+    </div>
+    <div class="mb-3">
+        <label for="grade" class="form-label">年級</label>
+        <input type="number" class="form-control" id="grade">
+    </div>
+    <button type="submit" class="btn btn-primary">註冊</button>
+    </form>
+{% endblock content %}
