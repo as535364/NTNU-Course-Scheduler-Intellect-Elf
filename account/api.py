@@ -12,6 +12,10 @@ def login():
         return redirect(url_for('account.login'))
 
 
-@account.route('/register')
+@account.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    if request.method == 'GET':
+        return render_template('register.html')
+    else:
+        print(request.form)
+        return redirect((url_for('index')))
