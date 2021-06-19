@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+# from model.user import User
 
-account = Blueprint('account', __name__)
+user = Blueprint('user', __name__)
 
 
-@account.route('/login', methods=['GET', 'POST'])
+@user.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -12,7 +13,7 @@ def login():
         return redirect(url_for('account.login'))
 
 
-@account.route('/register', methods=['GET', 'POST'])
+@user.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
