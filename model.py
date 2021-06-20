@@ -74,7 +74,7 @@ class Course(db.Model):
 class Evaluation(db.Model):
     eid = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.ForeignKey('user.uid'), nullable=False)
-    course = db.Column(db.ForeignKey('course.cid'), nullable=False)
+    course_id = db.Column(db.ForeignKey('course.cid'), nullable=False)
     description = db.Column(db.String(512))
     sweetness = db.Column(db.Integer, nullable=False)
     cool = db.Column(db.Integer, nullable=False)
