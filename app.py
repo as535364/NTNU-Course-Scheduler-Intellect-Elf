@@ -1,11 +1,12 @@
 from flask import Flask, render_template
-from db import db
+from share.db import db
 from routes.user import user_bp
 from routes.table import table_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = b'Your Key'
 db.init_app(app)
 
 

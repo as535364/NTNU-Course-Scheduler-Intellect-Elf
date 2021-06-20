@@ -1,17 +1,17 @@
-from db import db
+from share.db import db
 # import bcrypt
 
 
 class User(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    username = db.Column(db.String(30), nullable=False)
+    username = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     dept_name = db.Column(db.String(80), default='')
     grade = db.Column(db.Integer, default=0)
 
-    def __init__(self, email, username, password, is_admin=False, dept_name='', grade=0):
+    def __init__(self, email, username, password, dept_name, grade, is_admin=False):
         self.email = email
         self.username = username
         self.password = password
