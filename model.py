@@ -15,7 +15,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     dept_name = db.Column(db.String(80), default='')
     grade = db.Column(db.Integer, default=0)
-    courses = db.relationship('Course', secondary=takes, backref=db.backref('users'))
+    courses = db.relationship('Course', secondary=takes, backref=db.backref('user'))
 
     def __init__(self, email, username, password, dept_name, grade, is_admin=False):
         self.email = email
