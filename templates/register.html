@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 {% block title %}註冊{% endblock title%}
 {% block content %}
-<form>
+<form action="{{ url_for('user_bp.register') }}" method="post">
     <div class="mb-3">
-        <label for="Username" class="form-label">使用者名稱</label>
-        <input type="text" class="form-control" id="Username">
+        <label for="username" class="form-label">使用者名稱</label>
+        <input type="text" class="form-control" id="username" name="username">
         <div id="emailHelp" class="form-text">使用者名稱會作為評價者的識別，並用於登入，長度必須小於 12 位的英數組合。</div>
     </div>
     <div class="mb-3">
-        <label for="Email1" class="form-label">Email</label>
-        <input type="email" class="form-control" id="Email1">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email">
         <div id="emailHelp" class="form-text">用於忘記密碼的認證信。</div>
     </div>
     <div class="mb-3">
-        <label for="Password" class="form-label">密碼</label>
-        <input type="password" class="form-control" id="Password1">
+        <label for="password" class="form-label">密碼</label>
+        <input type="password" class="form-control" id="password" name="password">
     </div>
     <div class="mb-3">
-        <label for="RepeatPassword" class="form-label">重複密碼</label>
-        <input type="password" class="form-control" id="RepeatPassword">
+        <label for="repeatPassword" class="form-label">重複密碼</label>
+        <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
     </div>
     <div class="mb-3">
         <label for="dept" class="form-label">科系</label>
-        <input type="text" class="form-control" id="dept">
+        <input type="text" class="form-control" id="dept" name="dept">
     </div>
     <div class="mb-3">
         <label for="grade" class="form-label">年級</label>
-        <input type="number" class="form-control" id="grade">
+        <input type="number" class="form-control" id="grade" name="grade">
     </div>
     <button type="submit" class="btn btn-primary">註冊</button>
     </form>
