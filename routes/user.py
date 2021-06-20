@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from db import db
 from model import User
 
 user_bp = Blueprint('user_bp', __name__)
@@ -19,5 +20,9 @@ def register():
         return render_template('register.html')
     else:
         data = request.form
-        now_user = User(email=data.get('email'), username=data.get('username'), password=data.get('password'), dept_name=data.get('dept_name'), grade=data.get('grade'))
-        return redirect((url_for('index')))
+        user = User(email=data.get('email'), username=data.get('username'),
+                    password=data.get('password'), dept_name=data.get('dept_name'), grade=data.get('grade'))
+        db.session.add(user)
+        db.session.commit()
+        print(user)
+        return redirect((url_for('user_bp.login')))

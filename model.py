@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
-import bcrypt
-
-db = SQLAlchemy()
+from db import db
+# import bcrypt
 
 
 class User(db.Model):
@@ -16,7 +14,10 @@ class User(db.Model):
     def __init__(self, email, username, password, is_admin=False, dept_name='', grade=0):
         self.email = email
         self.username = username
-        self.password = bcrypt.hashpw(password, bcrypt.gensalt())
+        self.password = password
         self.is_admin = is_admin
         self.dept_name = dept_name
         self.grade = grade
+
+    def __str__(self):
+        return f'uid: {self.uid} email: {self.email} username: {self.email} password: {self.password} is_admin: {self.is_admin} dept_name: {self.dept_name} grade: {self.grade}'
