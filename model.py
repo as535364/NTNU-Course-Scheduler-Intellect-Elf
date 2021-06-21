@@ -79,6 +79,8 @@ class Evaluation(db.Model):
     sweetness = db.Column(db.Integer, nullable=False)
     cool = db.Column(db.Integer, nullable=False)
     gain = db.Column(db.Integer, nullable=False)
+    course = db.relationship('Course', backref=db.backref('evaluation'))
+    user = db.relationship('User', backref=db.backref('evaluation'))
 
     def __init__(self, eid, description, sweetness, cool, gain):
         self.eid = eid
