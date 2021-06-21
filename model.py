@@ -73,7 +73,7 @@ class Course(db.Model):
 
 class Evaluation(db.Model):
     eid = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.ForeignKey('user.username'), nullable=False)
+    username = db.Column(db.ForeignKey('user.username'), nullable=False)
     course_id = db.Column(db.ForeignKey('course.cid'), nullable=False)
     description = db.Column(db.String(512))
     sweetness = db.Column(db.Integer, nullable=False)
@@ -82,8 +82,8 @@ class Evaluation(db.Model):
     course = db.relationship('Course', backref=db.backref('evaluation'))
     user = db.relationship('User', backref=db.backref('evaluation'))
 
-    def __init__(self, user_id, course_id, description, sweetness, cool, gain):
-        self.user_id = user_id
+    def __init__(self, username, course_id, description, sweetness, cool, gain):
+        self.username = username
         self.course_id = course_id
         self.description = description
         self.sweetness = sweetness
