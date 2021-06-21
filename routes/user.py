@@ -40,7 +40,6 @@ def login():
         if is_login:
             session['username'] = query_user_by_username.username
             session['is_admin'] = query_user_by_username.is_admin
-            session['uid'] = query_user_by_username.uid
             return redirect(url_for('index'))
         else:
             return redirect(url_for('user_bp.login')), 403
