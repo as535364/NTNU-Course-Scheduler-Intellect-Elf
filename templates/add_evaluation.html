@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}新增課程評價{% endblock title%}
+{% block content %}
+  <div class="container-fluid" style="padding-top:20px; padding-bottom:20px; padding-left:100px; padding-right:100px;">
+      <h2 align="center"> 新增課程評價 </h2>
+      <hr style="height:3px;border-width:0;background-color:#46A3FF">
+        <div class="container-fluid" style="border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px;">
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">甜度</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option">
+                <label class="form-check-label" for="inlineRadio1"> 1 非常不甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option">
+                <label class="form-check-label" for="inlineRadio2"> 2 不甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 4 甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3">5 非常甜 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">涼度</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option">
+                <label class="form-check-label" for="inlineRadio1"> 1 非常不涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option">
+                <label class="form-check-label" for="inlineRadio2"> 2 不涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 4 涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3">5 非常涼 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">收穫</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option">
+                <label class="form-check-label" for="inlineRadio1"> 1 非常有收穫 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option">
+                <label class="form-check-label" for="inlineRadio2"> 2 沒收獲 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3"> 4 有收穫 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option">
+                <label class="form-check-label" for="inlineRadio3">5 非常有收穫 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">課程評價</span></div>
+            <br>
+            <form role="form">
+	            <div class="form-group">
+		            <textarea class="form-control" rows="10">輸入內容</textarea>
+	            </div>
+            </form>
+            <br><br>
+            <button type="submit" class="btn btn-primary">完成</button>
+        </div>
+  </div>
+{% endblock content %}
