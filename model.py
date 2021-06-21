@@ -82,8 +82,9 @@ class Evaluation(db.Model):
     course = db.relationship('Course', backref=db.backref('evaluation'))
     user = db.relationship('User', backref=db.backref('evaluation'))
 
-    def __init__(self, eid, description, sweetness, cool, gain):
-        self.eid = eid
+    def __init__(self, user_id, course_id, description, sweetness, cool, gain):
+        self.user_id = user_id
+        self.course_id = course_id
         self.description = description
         self.sweetness = sweetness
         self.cool = cool
