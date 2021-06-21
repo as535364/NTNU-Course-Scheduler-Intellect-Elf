@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from account.api import account
 from table.api import table
 
+
 app = Flask(__name__)
 
 

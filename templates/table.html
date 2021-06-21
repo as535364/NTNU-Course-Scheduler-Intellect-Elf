@@ -1,68 +1,490 @@
 {% extends "base.html" %}
+{% block head %}
+    <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
+{% endblock head %}
 {% block title %}查詢課表{% endblock title%}
 {% block content %}
+
+
+    <style>
+        #an
+         {
+            width:100%;
+            height:100%;
+            border-color: #F5FEFF;
+            z-index:9999;
+            position: relative;
+            opacity: 0.5;
+        }
+        #day
+        {
+            background: #2fc6de;
+            align-content: center;
+            vertical-align:middle;
+            margin-left: 20px;
+            text-align:center;
+            color: #435c59;
+        }
+
+
+        #session{
+            font-size: 20px;
+            text-align: center;
+            height:81px;
+            color: #435c59;
+        }
+        #t{
+            height: 18px;
+            font-size: 15px;
+            color: #8cd4cb;
+        {#background: #66CBC9;#}
+        }
+        #block{
+            height: 105px;
+        }
+
+        {##hole-form{#}
+        {#    background-color: #7083CE;#}
+    </style>
     <meta charset="utf-8">
-    <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
     <body>
-        <table class="table table-bordered">
-                <tr>
-                        <th>節次/星期</th>
-                        <th>星期一</th>
-                        <th>星期二</th>
-                        <th>星期三</th>
-                        <th>星期四</th>
-                        <th>星期五</th>
-                </tr>
-                <tr>
-                        <td>第一節</td>
-                        <td rowspan="2">通識教育</td>
-                        <td></td>
-                        <td></td>
-                        <td rowspan="3">微積分</td>
-                        <td rowspan="3"></td>
-                </tr>
-                <tr>
-                        <td>第二節</td>
-                        <td rowspan="2">離散數學</td>
-                        <td rowspan="2">英文(一)</td>
-                </tr>
-                <tr>
-                        <td>第三節</td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第四節</td>
-                        <td></td>
-                        <td rowspan="2">體育(一)</td>
-                        <td rowspan="3">計算機概論</td>
-                        <td rowspan="3">數位邏輯設計</td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第五節</td>
-                        <td></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第六節</td>
-                        <td></td>
-                        <td></td>
-                        <td rowspan="2">韻律教學法</td>
-                </tr>
-                <tr>
-                        <td>第七節</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                </tr>
+    <div class = "courseTable">
+        <table frame=void id = "hole-form">
+            <tr>
+                <td>
+                    <table>
+                        <tr style="height:40px; background-color: #7083CE;"></tr>
+                        <tr id = "t"><td>07:10</td></tr>
+                        <tr id = session><td>0</td></tr>
+                        <tr id = "t"><td>08:10</td></tr>
+                        <tr id = session><td>1</td></tr>
+                        <tr id = "t"><td>09:10</td></tr>
+                        <tr id = session><td>2</td></tr>
+                        <tr id = "t"><td>10:20</td></tr>
+                        <tr id = session><td>3</td></tr>
+                        <tr id = "t"><td>11:20</td></tr>
+                        <tr id = session><td>4</td></tr>
+                        <tr id = "t"><td>12:20</td></tr>
+                        <tr id = session><td>5</td></tr>
+                        <tr id = "t"><td>13:20</td></tr>
+                        <tr id = session><td>6</td></tr>
+                        <tr id = "t"><td>14:20</td></tr>
+                        <tr id = session><td>7</td></tr>
+                        <tr id = "t"><td>15:30</td></tr>
+                        <tr id = session><td>8</td></tr>
+                        <tr id = "t"><td>16:30</td></tr>
+                        <tr id = session><td>9</td></tr>
+                        <tr id = "t"><td>17:30</td></tr>
+                        <tr id = session><td>10</td></tr>
+                        <tr id = "t"><td>18:40</td></tr>
+                        <tr id = session><td>A</td></tr>
+                        <tr id = "t"><td>19:35</td></tr>
+                        <tr id = session><td>B</td></tr>
+                        <tr id = "t"><td>20:30</td></tr>
+                        <tr id = session><td>C</td></tr>
+                        <tr id = "t"><td>21:25</td></tr>
+                        <tr id = session><td>D</td></tr>
+
+                    </table>
+                </td>
+                <td align="left" valign="top">
+                    <table frame=void class="table-bordered" style="box-shadow:1px 2px 5px 1px #cccc;">
+                        <tr>
+                            <th id="day" style="-moz-border-radius-topleft: 10px; ">星期一</th>
+                            <th id="day">星期二</th>
+                            <th id="day">星期三</th>
+                            <th id="day">星期四</th>
+                            <th id="day">星期五</th>
+                            <th id="day" style="-moz-border-radius-topright: 10px">星期六</th>
+                        </tr>
+                        <tr>
+                            <td id="block">
+                                <div id="block">
+                                    <div class="info-block">
+                                        <div class="C_course">科技產業營業秘密保護與智慧財產權 </div>
+                                        <div class="B_course">教育心理學</div>
+                                        <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                                    </div>
+
+                                    <button id="an" type="button" class="btn btn-outline-primary "></button>
+                                </div>
+
+                            </td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                {#                 <td rowspan="3">微積分</td>#}
+
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                        <tr>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </table>
-    </body>
-    <div class="container">
+    </div>
+    <div class="courses">
+            {# 右邊區塊       #}
+            <div class="credits">
             <div class="row">
-                <div class="col"><span>1</span></div>
-                <div class="col"><span>2</span></div>
-                <div class="col"><span>3</span></div>
+                <div class="col-5"><span style="font-size:20px;">目前總學分: <span>27</span></span></div>
+                <div class="col"><span style="color:grey;"> 系上學分: <span>12</span></span></div>
+                <div class="col"><span style="color:grey;"> 通識學分: <span>4</span></span></div>
             </div>
-        </div>
+            </div>
+            <div class="content" >
+                <div class="title" >
+                    <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">選課志願</span>
+                </div>
+                <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
+                    <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
+                        <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">科技產業營業秘密保護與智慧財產權
+                                            <span class="C_field" style="font-size: 13px;">通識
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">中國經典文學閱讀：古典與現代
+                                            <span class="C_field" style="font-size: 13px;">通識
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">社會學
+                                            <span class="B_field" style="font-size: 13px;">選修
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育學系</span><span style="color:#7083CE">2學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">教育心理學
+                                            <span class="A_field" style="font-size: 13px;">必修
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育系</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="title">
+                    <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">加選課程</span>
+                </div>
+                <div class="search_sort">
+                    <div class="searching">
+                    {# search bar  #}
+                   <div class="col offset-md-0 mt-3">
+                        <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username">
+
+                        <button type="button" class="btn btn-outline-info" >
+    {#                        <i class="fas fa-search"></i>#}
+                            搜尋
+                        </button>
+                    </div>
+                    </div>
+                    {# 課程類別drop down  #}
+                    <div class="dropdown">
+                        <div class="col-md-12 btn-group">
+                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="color: aliceblue">課程類別</span>
+                        </button>
+                        <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                        </div>
+                    </div>
+                    {# 開課系所drop down  #}
+                    <div class="dropdown">
+                        <div class="col-md-12 btn-group offset-md-0 mt-3">
+                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="color: aliceblue">開課系所</span>
+                        </button>
+                        <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                        </div>
+                    </div>
+
+                </div>
+                    <div class="sort">
+
+                        <span style="font-size: 18px;">排序方式 :</span>
+                        <div class="toggle" style="margin-top: 8px;margin-left: 100px">
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    課程涼度
+                                </label>
+                        </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                    課程甜度
+                            </label>
+                        </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                    課程收穫度
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searchCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
+                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
+
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">科技產業營業秘密保護與智慧財產權
+                                            <span class="C_field" style="font-size: 13px;">通識
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">中國經典文學閱讀：古典與現代
+                                            <span class="C_field" style="font-size: 13px;">通識
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">社會學
+                                            <span class="B_field" style="font-size: 13px;">選修
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育學系</span><span style="color:#7083CE">2學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 22px;display:inline-block;">教育心理學
+                                            <span class="A_field" style="font-size: 13px;">必修
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育系</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+    </div>
+     </body>
+<body>
+
 {% endblock content %}
