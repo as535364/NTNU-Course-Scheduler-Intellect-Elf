@@ -30,8 +30,8 @@ class User(db.Model):
 
 
 class Course(db.Model):
-    cid = db.Column(db.String(128), primary_key=True)  # 課程ID
-    serial_no = db.Column(db.String(128))  # 科目代碼
+    cid = db.Column(db.String(128))  # 科目代碼
+    serial_no = db.Column(db.String(128), primary_key=True)  # 開課序號
     course_name = db.Column(db.String(128))  # 課程名稱
     department = db.Column(db.String(128))  # 開課單位
     reg_sel = db.Column(db.String(32))  # 必/選修
@@ -40,8 +40,8 @@ class Course(db.Model):
     time = db.Column(db.String(128))  # 上課時間
     location = db.Column(db.String(128))  # 上課地點
     instructor = db.Column(db.String(128))  # 授課教師
-    year = db.Column(db.Integer)  # 學年
-    term = db.Column(db.Integer)  # 學期
+    year = db.Column(db.Integer, primary_key=True)  # 學年
+    term = db.Column(db.Integer, primary_key=True)  # 學期
     quota = db.Column(db.Integer)  # 限修人數
     authorize_quota = db.Column(db.Integer)  # 授權碼人數
     interschool_quota = db.Column(db.Integer)  # 校際人數
