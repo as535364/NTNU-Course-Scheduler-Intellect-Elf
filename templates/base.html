@@ -17,9 +17,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                {# TODO navbar based on login status #}
                 <a class="nav-link" href="{{ url_for('table_bp.show') }}">排課</a>
-                {% if session['username'] %}
+                {% if session.get('username') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         帳號管理

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}測試使用者{% endblock title%}
+{% block content %}
+    <ul>
+        <li>帳號: {{ user.username }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>管理員: {{ user.is_admin }}</li>
+        <li>科系: {{ user.dept_name }}</li>
+        <li>年級: {{ user.grade }}</li>
+    </ul>
+    Courses:
+    <ul>
+        {% for course in user.courses %}
+        <li>{{ course.name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
