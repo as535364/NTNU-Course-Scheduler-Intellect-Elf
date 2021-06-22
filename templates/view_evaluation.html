@@ -11,7 +11,7 @@
         <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px; margin-right: 10px;">
+                <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:30px; padding-right:30px;">
                     <div class="row"><span>授課教師 : {{instructor}}</span></div>
                     <div class="row"><span>必\選修 : {{reg_sel}}</span></div>
                     <div class="row"><span>學分數 : {{ credits }}</span></div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px; margin-left: 10px;">
+                <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:30px; padding-right:30px;">
                     <div class="row"><span>限修人數 : {{ quota }}</span></div>
                     <div class="row"><span>授權碼名額 : {{ authorize_quota }}</span></div>
                     <div class="row"><span>系統開放人數 : {{ interschool_quota }}</span></div>
@@ -58,8 +58,8 @@
         <br>
         <br>
         <div class="btn-group btn-sm pull-right" role="group" aria-label="add or edit" style="float:right">
-            <a href="/course/add" class="btn btn-info" role="button">新增評價</a>
-            <a href="/course/edit" class="btn btn-info" role="button">編輯評價</a>
+            <a href="/course/add/{{ cid }}" class="btn btn-info" role="button">新增評價</a>
+            <a href="/course/edit/{{ cid }}" class="btn btn-info" role="button">編輯評價</a>
         </div>
         <br>
         <p>課程評價</p>
@@ -70,7 +70,7 @@
                   <li class="list-group-item" style="border: none;">
                         <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding:15px;">
                             <div class="container-fluid">
-                                <a href="/{{ evaluation.username }}" class="btn btn-light btn-sm" role="button">{{ evaluation.username }}</a>
+                                <button type="button" class="btn btn-light btn-sm" disabled>{{ evaluation.username }}</button>
                                 <span style="color:#559ACC">&nbsp&nbsp&nbsp甜度 : {{ evaluation.sweetness }}&nbsp&nbsp涼度 : {{ evaluation.cool }}&nbsp&nbsp收穫 : {{ evaluation.gain }}</span>
                             </div>
                             <div class="container-fluid" style="padding-top:5px;">

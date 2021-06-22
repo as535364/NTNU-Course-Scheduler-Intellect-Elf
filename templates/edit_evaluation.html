@@ -5,12 +5,12 @@
       <h2 align="center"> 編輯課程評價 </h2>
       <hr style="height:3px;border-width:0;background-color:#46A3FF">
         <div class="container-fluid" style="border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px;">
-            <form action="{{ url_for('evaluation_bp.edit') }}" method="post">
+            <form action="{{ url_for('evaluation_bp.edit', cid=cid) }}" method="post">
             <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">甜度</span></div>
             <br>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="sweet" id="sweet1" value="1" {{ def_sweetness[1] }}>
-                <label class="form-check-label" for="sweet1"> 1  非常不甜 </label>
+                <label class="form-check-label" for="sweet1"> 1 非常不甜 </label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="sweet" id="sweet2" value="2" {{ def_sweetness[2] }}>

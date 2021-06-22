@@ -5,7 +5,7 @@
       <h2 align="center"> 新增課程評價 </h2>
       <hr style="height:3px;border-width:0;background-color:#46A3FF">
         <div class="container-fluid" style="border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px;">
-            <form action="{{ url_for('evaluation_bp.add') }}" method="post">
+            <form action="{{ url_for('evaluation_bp.add', cid=cid) }}" method="post">
             <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">甜度</span></div>
             <br>
             <div class="form-check form-check-inline">

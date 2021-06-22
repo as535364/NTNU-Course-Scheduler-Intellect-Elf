@@ -36,7 +36,7 @@ def view(cid):
         avg_gain = Evaluation.query.with_entities(func.avg(Evaluation.gain)).filter(Evaluation.course_id == cid).first()
         # 課程評價
         evaluation_data = Evaluation.query.filter_by(course_id=cid).all()
-        return render_template('view_evaluation.html', evaluation_data=evaluation_data, sweetness=avg_sweetness[0], cool=avg_cool[0], gain=avg_gain[0],
+        return render_template('view_evaluation.html', cid=cid, evaluation_data=evaluation_data, sweetness=avg_sweetness[0], cool=avg_cool[0], gain=avg_gain[0],
                                serial_no=serial_no, term=term,
                                year=year, department=department, course_name=course_name, course_code=course_code,
                                restrict=restrict, quota=quota, authorize_quota=authorize_quota,
@@ -44,18 +44,19 @@ def view(cid):
                                credits=credits, english=english, time=time, location=location, note=note)
 
 
-@evaluation_bp.route('/add', methods=['GET', 'POST'])
+@evaluation_bp.route('/add/<cid>', methods=['GET', 'POST'])
 @login_required
-def add(user):
+def add(user, cid):
+    print(user)
     if request.method == 'GET':
-        checkdata = Evaluation.query.filter_by(username=user, course_id=1).first()
+        checkdata = Evaluation.query.filter_by(username=user.username, course_id=cid).first()
         error = False
         if checkdata:
             flash('已有評價紀錄，如欲編輯評價請點選 "編輯評價"', 'error')
             error = True
-            return redirect(url_for('evaluation_bp.view'))
+            return redirect(url_for('evaluation_bp.view', cid=cid))
         else:
-            return render_template('add_evaluation.html')
+            return render_template('add_evaluation.html', cid=cid)
     else:
         data = request.form
         sweetness = data.get('sweet')
@@ -75,27 +76,30 @@ def add(user):
         if not description:
             flash('請輸入評價', 'error')
             error = True
+        if len(description) > 512:
+            flash('評價勿輸入超過512個字元', 'error')
+            error = True
         if not error:
-            evaluation = Evaluation(username=user, course_id=1, sweetness=sweetness, cool=cool, gain=gain,
+            evaluation = Evaluation(username=user.username, course_id=cid, sweetness=sweetness, cool=cool, gain=gain,
                                     description=description)
             db.session.add(evaluation)
             db.session.commit()
             flash('評價儲存成功', 'success')
-            return redirect(url_for('evaluation_bp.view'))
+            return redirect(url_for('evaluation_bp.view', cid=cid))
         else:
-            return redirect(url_for('evaluation_bp.add'))
+            return redirect(url_for('evaluation_bp.add', cid=cid))
 
 
-@evaluation_bp.route('/edit', methods=['GET', 'POST'])
+@evaluation_bp.route('/edit/<cid>', methods=['GET', 'POST'])
 @login_required
-def edit(user):
+def edit(user, cid):
     if request.method == 'GET':
-        data = Evaluation.query.filter_by(username='40711014e', course_id=1).first()
+        data = Evaluation.query.filter_by(username=user.username, course_id=cid).first()
         error = False
         if not data:
             flash('查無評價紀錄，如欲新增評價請點選 "新增評價"', 'error')
             error = True
-            return redirect(url_for('evaluation_bp.view'))
+            return redirect(url_for('evaluation_bp.view', cid=cid))
         else:
             sweetness = data.sweetness
             cool = data.cool
@@ -113,7 +117,7 @@ def edit(user):
             for i in range(1, 6):
                 if i == gain:
                     def_gain[i] = 'checked'
-            return render_template('edit_evaluation.html', def_sweetness=def_sweetness, def_cool=def_cool,
+            return render_template('edit_evaluation.html', cid=cid, def_sweetness=def_sweetness, def_cool=def_cool,
                                    def_gain=def_gain,
                                    description=description)
     else:
@@ -135,14 +139,17 @@ def edit(user):
         if not description:
             flash('請輸入評價', 'error')
             error = True
+        if len(description) > 512:
+            flash('評價勿輸入超過512個字元', 'error')
+            error = True
         if not error:
-            Evaluation.query.filter_by(username='40711014e', course_id='1').update(dict(sweetness=sweetness))
-            Evaluation.query.filter_by(username='40711014e', course_id='1').update(dict(cool=cool))
-            Evaluation.query.filter_by(username='40711014e', course_id='1').update(dict(gain=gain))
-            Evaluation.query.filter_by(username='40711014e', course_id='1').update(dict(description=description))
+            Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(sweetness=sweetness))
+            Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(cool=cool))
+            Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(gain=gain))
+            Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(description=description))
             db.session.commit()
             flash('評價更新成功', 'success')
-            return redirect(url_for('evaluation_bp.view'))
+            return redirect(url_for('evaluation_bp.view', cid=cid))
         else:
-            return redirect(url_for('evaluation_bp.edit'))
+            return redirect(url_for('evaluation_bp.edit', cid=cid))
 
