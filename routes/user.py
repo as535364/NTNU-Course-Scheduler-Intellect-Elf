@@ -8,6 +8,33 @@ user_bp = Blueprint('user_bp', __name__)
 # TODO login_required
 
 
+def user_form_validation(email, password, repeat_password, username=None):
+    error = False
+    if username is not None and not re.match(r"^\w{1,12}$", username):
+        flash('帳號未輸入或是格式錯誤', 'error')
+        error = True
+        if User.query.filter_by(email=email).first():
+            flash('帳號與其他帳號重複', 'error')
+            error = True
+
+    if email is not None:
+        print(email)
+        if not re.match(r".+@.+\..+", email):
+            print(re.match(r".+@.+\..+", email))
+            flash('Email 未輸入或是格式錯誤', 'error')
+            error = True
+
+    if (password is not None or repeat_password is not None) and \
+            (not re.match(r"^.{1,30}$", password) or not re.match(r"^.{1,30}$", repeat_password)):
+        flash('密碼以及重複密碼未輸入或是格式錯誤', 'error')
+        error = True
+        if password != repeat_password:
+            flash('密碼以及重複密碼不一致', 'error')
+            error = True
+
+    return error
+
+
 @user_bp.route('/logout')
 def logout():
     session.clear()
@@ -24,7 +51,7 @@ def login():
         username = data.get('username')
         password = data.get('password')
         error = False
-        if not username or not password:
+        if username == '' or password == '':
             flash('請輸入帳號密碼', 'error')
             error = True
 
@@ -52,40 +79,48 @@ def register():
     else:
         # validation
         data = request.form
-        username = data.get('username')
-        email = data.get('email')
-        password = data.get('password')
-        repeat_password = data.get('repeatPassword')
-        dept_name = data.get('dept_name') if data.get('dept_name') else ''
-        grade = data.get('grade') if data.get('grade') else 0
-        error = False
-        if not re.match(r"^\w{1,12}$", username):
-            flash('帳號未輸入或是格式錯誤', 'error')
-            error = True
-        if not re.match(r".+@.+\..+", email):
-            flash('Email 未輸入或是格式錯誤', 'error')
-            error = True
-        if not password or not repeat_password or not re.match(r"^.{1,30}$", password) or \
-                not re.match(r"^.{1,30}$", repeat_password):
-            flash('密碼以及重複密碼未輸入或是格式錯誤', 'error')
-            error = True
-        if password != repeat_password:
-            flash('密碼以及重複密碼不一致', 'error')
-            error = True
-        query_user_by_username = User.query.filter_by(username=username).first()
-        query_user_by_email = User.query.filter_by(email=email).first()
-        if query_user_by_email:
-            flash('Email 與其他帳號重複', 'error')
-            error = True
-        if query_user_by_username:
+        error = user_form_validation(data.get('email'), data.get('password'),
+                                     data.get('repeatPassword'), data.get('username'))
+
+        if User.query.filter_by(username=data.get('username')).first():
             flash('帳號與其他帳號重複', 'error')
             error = True
+
         # redirect
+        dept_name = data.get('dept') if data.get('dept') else ''
+        grade = data.get('grade') if data.get('grade') else 0
         if not error:
-            user = User(username=username, email=email, password=password, dept_name=dept_name, grade=grade)
+            user = User(username=data.get('username'), email=data.get('email'), password=data.get('password'),
+                        dept_name=dept_name, grade=grade)
             db.session.add(user)
             db.session.commit()
             flash('註冊成功', 'success')
             return redirect((url_for('user_bp.login')))
         else:
             return render_template('register.html'), 400
+
+
+@user_bp.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'GET':
+        user = User.query.filter_by(username=session['username']).first()
+        return render_template('profile.html', user=user)
+    else:
+        user = User.query.filter_by(username=session['username']).first()
+        data = request.form
+        email = data.get('email') if data.get('email') != '' else None
+        password = data.get('password') if data.get('password') != '' else None
+        repeat_password = data.get('repeatPassword') if data.get('repeatPassword') != '' else None
+
+        error = user_form_validation(email, password, repeat_password)
+
+        if not error:
+            user.email = data.get('email') if data.get('email') else user.email
+            user.password = data.get('password') if data.get('password') else user.password
+            user.dept_name = data.get('dept') if data.get('dept') else user.dept_name
+            user.grade = data.get('grade') if data.get('grade') else user.grade
+            db.session.commit()
+            flash('更新資料完成', 'success')
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('user_bp.profile')), 400
