@@ -2,36 +2,36 @@ from share.db import db
 
 takes = db.Table(
     'takes',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.uid'), primary_key=True),
-    db.Column('course_id', db.String(128), db.ForeignKey('course.cid'), primary_key=True)
+    db.Column('username', db.String(30), db.ForeignKey('user.username'), primary_key=True),
+    db.Column('course_id', db.Integer, db.ForeignKey('course.cid'), primary_key=True)
 )
 
 
 class User(db.Model):
-    uid = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    username = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     dept_name = db.Column(db.String(80), default='')
     grade = db.Column(db.Integer, default=0)
     courses = db.relationship('Course', secondary=takes, backref=db.backref('user'))
 
-    def __init__(self, email, username, password, dept_name, grade, is_admin=False):
-        self.email = email
+    def __init__(self, username, email, password, dept_name, grade, is_admin=False):
         self.username = username
+        self.email = email
         self.password = password
-        self.is_admin = is_admin
         self.dept_name = dept_name
         self.grade = grade
+        self.is_admin = is_admin
 
     def __str__(self):
-        return f'uid: {self.uid} email: {self.email} username: {self.email} password: {self.password} is_admin: {self.is_admin} dept_name: {self.dept_name} grade: {self.grade}'
+        return f'email: {self.email} username: {self.email} password: {self.password} is_admin: {self.is_admin} dept_name: {self.dept_name} grade: {self.grade}'
 
 
 class Course(db.Model):
-    cid = db.Column(db.String(128))  # 科目代碼
-    serial_no = db.Column(db.String(128), primary_key=True)  # 開課序號
+    cid = db.Column(db.Integer, primary_key=True)  # 課程 ID
+    course_code = db.Column(db.String(128))  # 科目代碼
+    serial_no = db.Column(db.String(128))  # 開課序號
     course_name = db.Column(db.String(128))  # 課程名稱
     department = db.Column(db.String(128))  # 開課單位
     reg_sel = db.Column(db.String(32))  # 必/選修
@@ -40,8 +40,8 @@ class Course(db.Model):
     time = db.Column(db.String(128))  # 上課時間
     location = db.Column(db.String(128))  # 上課地點
     instructor = db.Column(db.String(128))  # 授課教師
-    year = db.Column(db.Integer, primary_key=True)  # 學年
-    term = db.Column(db.Integer, primary_key=True)  # 學期
+    year = db.Column(db.Integer)  # 學年
+    term = db.Column(db.Integer)  # 學期
     quota = db.Column(db.Integer)  # 限修人數
     authorize_quota = db.Column(db.Integer)  # 授權碼人數
     interschool_quota = db.Column(db.Integer)  # 校際人數
@@ -49,9 +49,9 @@ class Course(db.Model):
     dept_code = db.Column(db.String(128))  # 系代碼
     note = db.Column(db.String(128))  # 備註
 
-    def __init__(self, cid, serial_no, course_name, department, reg_sel, credits, restrict, time, location, instructor,
+    def __init__(self, course_code, serial_no, course_name, department, reg_sel, credits, restrict, time, location, instructor,
                  year, term, quota, authorize_quota, interschool_quota, english, dept_code, note):
-        self.CID = cid
+        self.course_code = course_code
         self.serial_no = serial_no
         self.course_name = course_name
         self.department = department
@@ -73,15 +73,18 @@ class Course(db.Model):
 
 class Evaluation(db.Model):
     eid = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.ForeignKey('user.uid'), nullable=False)
+    username = db.Column(db.ForeignKey('user.username'), nullable=False)
     course_id = db.Column(db.ForeignKey('course.cid'), nullable=False)
     description = db.Column(db.String(512))
     sweetness = db.Column(db.Integer, nullable=False)
     cool = db.Column(db.Integer, nullable=False)
     gain = db.Column(db.Integer, nullable=False)
+    course = db.relationship('Course', backref=db.backref('evaluation'))
+    user = db.relationship('User', backref=db.backref('evaluation'))
 
-    def __init__(self, eid, description, sweetness, cool, gain):
-        self.eid = eid
+    def __init__(self, username, course_id, description, sweetness, cool, gain):
+        self.username = username
+        self.course_id = course_id
         self.description = description
         self.sweetness = sweetness
         self.cool = cool

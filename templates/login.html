@@ -4,11 +4,11 @@
     <form action="{{ url_for('user_bp.login') }}" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">帳號</label>
-        <input type="text" class="form-control" id="username" name="username">
+        <input type="text" class="form-control" id="username" name="username" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">密碼</label>
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password" class="form-control" id="password" name="password" required>
       </div>
       <button type="submit" class="btn btn-primary">登入</button>
     </form>
