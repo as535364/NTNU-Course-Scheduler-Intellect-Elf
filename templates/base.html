@@ -19,9 +19,20 @@
             <div class="navbar-nav ms-auto">
                 {# TODO navbar based on login status #}
                 <a class="nav-link" href="{{ url_for('table_bp.show') }}">排課</a>
-                <a class="nav-link" href="{{ url_for('user_bp.login') }}">登入</a>
-                <a class="nav-link" href="{{ url_for('user_bp.register') }}">註冊</a>
-                <a class="nav-link" href="{{ url_for('user_bp.logout') }}">登出</a>
+                {% if session['username'] %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        帳號管理
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">{{ session['username'] }}</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('user_bp.logout') }}">登出</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <a class="nav-link" href="{{ url_for('user_bp.login') }}">登入</a>
+                    <a class="nav-link" href="{{ url_for('user_bp.register') }}">註冊</a>
+                {% endif %}
             </div>
         </div>
       </div>
@@ -50,7 +61,6 @@
             </div>
             {% endif %}
         {% endwith %}
-
         {% block content %}
         {% endblock content %}
     </div>
