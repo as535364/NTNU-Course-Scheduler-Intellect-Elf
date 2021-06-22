@@ -4,7 +4,7 @@
 {% endblock head %}
 {% block title %}查詢課表{% endblock title%}
 {% block content %}
-
+{#<div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>#}
 
     <style>
         #an
@@ -250,15 +250,21 @@
                 </div>
                 <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-                    {#  課程顯示    #}
-                        {% for item in values%}
-                            <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                        {% for item in course_searched %}
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">{{item.course_name}}
-                                            <span class="C_field" style="font-size: 13px;">通識
-                                            </span>
+                                    <div class="col-10">
+                                        <span style="font-size: 22px;">{{ item.course_name }}
+                                            {% if item.reg_sel == "通"%}
+                                                <span class="C_field" style="font-size: 13px;">通識</span>
+                                            {% endif %}
+                                            {%if item.reg_sel == "選"%}
+                                                <span class="B_field" style="font-size: 13px;">選修</span>
+                                            {% endif %}
+                                            {%if item.reg_sel == "必"%}
+                                                <span class="A_field" style="font-size: 13px;">必修</span>
+                                            {% endif %}
                                         </span>
                                     </div>
                                     <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
@@ -266,15 +272,14 @@
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>{{ item.serial_no }} / {{ item.instructor }} / {{ item.credits }} 學分</span></div>
                                     <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
 
-
-                    </div>
+                        </div>
                 </div>
                 <div class="title">
                     <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">加選課程</span>
@@ -296,7 +301,6 @@
                         </div>
                     </div>
                     {# 課程類別drop down  #}
-                     {# 課程類別drop down  #}
 {#                    <div class="dropdown">#}
 {#                        <div class="col-md-12 btn-group">#}
 {#                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">#}
@@ -316,12 +320,21 @@
 {##}
 {#                        </div>#}
 {#                    </div>#}
-                    <select class="form-select mb-3" aria-label="Default select example" name="category">
-                      <option selected>課程列別</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
+{#                    {% if category == null or category == None %}#}
+{#                        <select class="form-select mb-3" aria-label="Default select example" name="category">#}
+{#                          <option selected>課程類別</option>#}
+{#                            {% for dept in db_dept%}#}
+{#                                <option value={{ dept }}>{{ dept }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+{#                    {% else %}#}
+{#                        <select class="form-select mb-3" aria-label="Default select example" name="category">#}
+{#                          <option selected>{{category}}</option>#}
+{#                          {% for dept in db_dept%}#}
+{#                                <option value={{ dept }}>{{ dept }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+{#                    {% endif %}#}
 {#                     開課系所drop down#}
 {#                    <div class="dropdown">#}
 {#                        <div class="col-md-12 btn-group offset-md-0 mt-3">#}
@@ -340,12 +353,23 @@
 {#                            </script>#}
 {#                        </div>#}
 {#                    </div>#}
-                    <select class="form-select mb-3" aria-label="Default select example" name="dept">
-                      <option selected>開課系所</option>
-                      <option value="資工系">資工系</option>
-                      <option value="通識">通識</option>
-                      <option value="共同科">共同科</option>
-                    </select>
+                    {% if (dept == null or dept == None) or (code == null or code == None) %}
+                        <select class="form-select mb-3" aria-label="Default select example" name="dept">
+                          <option selected>開課系所</option>
+                          {% for dept_code, dept_name in db_dept.items() %}
+                                <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
+                          {% endfor %}
+                        </select>
+                    {% else %}
+                        <select class="form-select mb-3" aria-label="Default select example" name="dept">
+                            <option value={{ dept_selected['code'] }} selected>{{ dept_selected['code'] }} {{ dept_selected['name'] }}</option>
+                            <option value="開課系所">開課系所</option>
+                            {% for dept_code, dept_name in db_dept.items() %}
+                                <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+
 
                 </div>
 
@@ -376,14 +400,21 @@
                 </div>
                 <div class="searchCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                      <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-
+                        {% for item in course_searched%}
                          <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
                                     <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">科技產業營業秘密保護與智慧財產權
-                                            <span class="C_field" style="font-size: 13px;">通識
-                                            </span>
+                                        <span style="font-size: 22px;">{{ item.course_name }}
+                                            {% if item.reg_sel == "通"%}
+                                                <span class="C_field" style="font-size: 13px;">通識</span>
+                                            {% endif %}
+                                            {%if item.reg_sel == "選"%}
+                                                <span class="B_field" style="font-size: 13px;">選修</span>
+                                            {% endif %}
+                                            {%if item.reg_sel == "必"%}
+                                                <span class="A_field" style="font-size: 13px;">必修</span>
+                                            {% endif %}
                                         </span>
                                     </div>
                                     <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
@@ -391,12 +422,12 @@
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ item.serial_no }} / {{ item.instructor }} / {{ item.credits }} 學分</span></div>
                                     <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
                                 </div>
                             </div>
                         </div>
-
+                        {% endfor %}
 
                         </div>
                 </div>
