@@ -250,11 +250,13 @@
                 </div>
                 <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-                        <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                    {#  課程顯示    #}
+                        {% for item in values%}
+                            <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
                                     <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">科技產業營業秘密保護與智慧財產權
+                                        <span style="font-size: 22px;display:inline-block;">{{item.course_name}}
                                             <span class="C_field" style="font-size: 13px;">通識
                                             </span>
                                         </span>
@@ -269,63 +271,7 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">中國經典文學閱讀：古典與現代
-                                            <span class="C_field" style="font-size: 13px;">通識
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">社會學
-                                            <span class="B_field" style="font-size: 13px;">選修
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育學系</span><span style="color:#7083CE">2學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">教育心理學
-                                            <span class="A_field" style="font-size: 13px;">必修
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育系</span><span style="color:#7083CE">3學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
 
 
                     </div>
@@ -333,47 +279,63 @@
                 <div class="title">
                     <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">加選課程</span>
                 </div>
-                <div class="search_sort">
+            {# SEARCH COURSE#}
+                <form action="{{ url_for('table_bp.search_course') }}" method="post">
+                    <div class="search_sort">
                     <div class="searching">
                     {# search bar  #}
                    <div class="col offset-md-0 mt-3">
                         <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username">
-
-                        <button type="button" class="btn btn-outline-info" >
-    {#                        <i class="fas fa-search"></i>#}
-                            搜尋
-                        </button>
-                    </div>
+                        {% if condi == null %}
+                                <input type="text" name="condition" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username">
+                                <button type="submit" class="btn btn-outline-info" >搜尋</button>
+                        {% else %}
+                                <input type="text" name="condition" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username" value="{{ condi }}">
+                                <button type="submit" class="btn btn-outline-info" >搜尋</button>
+                        {% endif %}
+                        </div>
                     </div>
                     {# 課程類別drop down  #}
                     <div class="dropdown">
                         <div class="col-md-12 btn-group">
-                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span style="color: aliceblue">課程類別</span>
-                        </button>
-                        <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id = "btnTypeTex" name = "btnTypeTex" style="color: aliceblue">課程類別</span>
+                            </button>
+                            <ul id="typeSelect"  class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >
+                                <li><a class="dropdown-item" onclick="showType(this)" value = "Action" >Action </a></li>
+                                <li><a class="dropdown-item" onclick="showType(this)" value = "Another action">Another action </a></li>
+                                <li><a class="dropdown-item" onclick="showType(this)" value = "Something else here">Something else here </a></li>
+                            </ul>
+                            <script>
+                                function showType( item ) {
+                                  document.getElementById('btnTypeTex').innerHTML =item.innerHTML;
+                                  document.getElementById('btnTypeTex').value = item.innerHTML;
+                                }
+                            </script>
+
                         </div>
                     </div>
-                    {# 開課系所drop down  #}
+{#                     開課系所drop down#}
                     <div class="dropdown">
                         <div class="col-md-12 btn-group offset-md-0 mt-3">
-                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span style="color: aliceblue">開課系所</span>
-                        </button>
-                        <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                             <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id = "btnDeptTex" name = "btnDeptTex" style="color: aliceblue">開課系所</span>
+                            </button>
+                            <ul id="typeSelect" class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >
+                                <li><a class="dropdown-item" onclick="showDept(this)" >Action </a></li>
+                                <li><a class="dropdown-item" onclick="showDept(this)">Another action </a></li>
+                                <li><a class="dropdown-item" onclick="showDept(this)">Something else here </a></li>
+                            </ul>
+                            <script>
+                                function showDept( item ) {
+                                  document.getElementById('btnDeptTex').innerHTML =item.innerHTML;
+                                }
+                            </script>
                         </div>
                     </div>
 
                 </div>
+
                     <div class="sort">
 
                         <span style="font-size: 18px;">排序方式 :</span>
@@ -421,70 +383,14 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">中國經典文學閱讀：古典與現代
-                                            <span class="C_field" style="font-size: 13px;">通識
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">領域 : 哲學思維與道德推理</span><span style="color:#7083CE">3學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">社會學
-                                            <span class="B_field" style="font-size: 13px;">選修
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育學系</span><span style="color:#7083CE">2學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
-                            <div class="course_name">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <span style="font-size: 22px;display:inline-block;">教育心理學
-                                            <span class="A_field" style="font-size: 13px;">必修
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
-                                </div>
-                            </div>
-                            <div class="dept">
-                                <div class="row">
-                                    <div class="col-9"> <span style="color:#7083CE; margin-right: 10px; ">教育系</span><span style="color:#7083CE">3學分 </span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
-                                </div>
-                            </div>
-                        </div>
 
 
                         </div>
-                    </div>
                 </div>
+                </form>
     </div>
-     </body>
-<body>
+    </div>
+    </body>
+
 
 {% endblock content %}
