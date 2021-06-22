@@ -27,7 +27,7 @@ def search_course():
         # if request.form.get('btnDeptTex') != '開課系所':
         #     tex.append(request.values['btnDeptTex'])
         print(tex)
-        # if len(tex) == 3:
+
         return render_template('table.html')
     else:
         return render_template('table.html')
