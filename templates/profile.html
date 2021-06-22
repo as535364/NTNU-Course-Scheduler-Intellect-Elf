@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}更改資料{% endblock title%}
+{% block content %}
+<form action="{{ url_for('user_bp.profile') }}" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">帳號 *</label>
+        <input class="form-control" type="text" placeholder="{{ user['username'] }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" placeholder="不更改請留空" id="email" name="email">
+        <div id="emailHelp" class="form-text">用於忘記密碼的認證信。</div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">密碼</label>
+        <input type="password" class="form-control" placeholder="不更改請留空" id="password" name="password">
+        <div id="emailHelp" class="form-text">密碼為長度必須小於 30 位。</div>
+    </div>
+    <div class="mb-3">
+        <label for="repeatPassword" class="form-label">重複密碼</label>
+        <input type="password" class="form-control" placeholder="不更改請留空" id="repeatPassword" name="repeatPassword">
+    </div>
+    <div class="mb-3">
+        <label for="dept" class="form-label">科系</label>
+        <input type="text" class="form-control" value="{{ user['dept_name'] }}" id="dept" name="dept">
+    </div>
+    <div class="mb-3">
+        <label for="grade" class="form-label">年級</label>
+        <input type="number" class="form-control" value="{{ user['grade'] }}" id="grade" name="grade">
+    </div>
+    <button type="submit" class="btn btn-primary">更新</button>
+    </form>
+{% endblock content %}
