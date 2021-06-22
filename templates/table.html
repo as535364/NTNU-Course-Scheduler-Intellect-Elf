@@ -250,7 +250,7 @@
                 </div>
                 <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-                        {% for item in course_searched %}
+                        {% for item in user_course %}
                          <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
@@ -267,7 +267,7 @@
                                             {% endif %}
                                         </span>
                                     </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
                                 </div>
                             </div>
                             <div class="dept">
@@ -291,84 +291,23 @@
                     {# search bar  #}
                    <div class="col offset-md-0 mt-3">
                         <div class="input-group mb-3">
-                        {% if condi == null %}
                                 <input type="text" name="condition" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username">
                                 <button type="submit" class="btn btn-outline-info" >搜尋</button>
-                        {% else %}
-                                <input type="text" name="condition" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username" value="{{ condi }}">
-                                <button type="submit" class="btn btn-outline-info" >搜尋</button>
-                        {% endif %}
                         </div>
                     </div>
-                    {# 課程類別drop down  #}
-{#                    <div class="dropdown">#}
-{#                        <div class="col-md-12 btn-group">#}
-{#                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">#}
-{#                                <span id = "btnTypeTex" name = "btnTypeTex" style="color: aliceblue">課程類別</span>#}
-{#                            </button>#}
-{#                            <ul id="typeSelect"  class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >#}
-{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Action" >Action </a></li>#}
-{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Another action">Another action </a></li>#}
-{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Something else here">Something else here </a></li>#}
-{#                            </ul>#}
-{#                            <script>#}
-{#                                function showType( item ) {#}
-{#                                  document.getElementById('btnTypeTex').innerHTML =item.innerHTML;#}
-{#                                  document.getElementById('btnTypeTex').value = item.innerHTML;#}
-{#                                }#}
-{#                            </script>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{#                    {% if category == null or category == None %}#}
-{#                        <select class="form-select mb-3" aria-label="Default select example" name="category">#}
-{#                          <option selected>課程類別</option>#}
-{#                            {% for dept in db_dept%}#}
-{#                                <option value={{ dept }}>{{ dept }}</option>#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                    {% else %}#}
-{#                        <select class="form-select mb-3" aria-label="Default select example" name="category">#}
-{#                          <option selected>{{category}}</option>#}
-{#                          {% for dept in db_dept%}#}
-{#                                <option value={{ dept }}>{{ dept }}</option>#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                    {% endif %}#}
-{#                     開課系所drop down#}
-{#                    <div class="dropdown">#}
-{#                        <div class="col-md-12 btn-group offset-md-0 mt-3">#}
-{#                             <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">#}
-{#                                <span id = "btnDeptTex" name = "btnDeptTex" style="color: aliceblue">開課系所</span>#}
-{#                            </button>#}
-{#                            <ul id="typeSelect" class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >#}
-{#                                <li><a class="dropdown-item" onclick="showDept(this)" >Action </a></li>#}
-{#                                <li><a class="dropdown-item" onclick="showDept(this)">Another action </a></li>#}
-{#                                <li><a class="dropdown-item" onclick="showDept(this)">Something else here </a></li>#}
-{#                            </ul>#}
-{#                            <script>#}
-{#                                function showDept( item ) {#}
-{#                                  document.getElementById('btnDeptTex').innerHTML =item.innerHTML;#}
-{#                                }#}
-{#                            </script>#}
-{#                        </div>#}
-{#                    </div>#}
-                    {% if (dept == null or dept == None) or (code == null or code == None) %}
+
+{#                    {% if (dept == null or dept == None) or (code == null or code == None) %}#}
                         <select class="form-select mb-3" aria-label="Default select example" name="dept">
                           <option selected>開課系所</option>
                           {% for dept_code, dept_name in db_dept.items() %}
                                 <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
                           {% endfor %}
                         </select>
-                    {% else %}
-                        <select class="form-select mb-3" aria-label="Default select example" name="dept">
-                            <option value={{ dept_selected['code'] }} selected>{{ dept_selected['code'] }} {{ dept_selected['name'] }}</option>
-                            <option value="開課系所">開課系所</option>
-                            {% for dept_code, dept_name in db_dept.items() %}
-                                <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
-                            {% endfor %}
-                        </select>
-                    {% endif %}
+
+                        <div style="opacity: 0.4;"><span>Search: </span>
+                            {% if condi != null %}<span>{{ condi }} </span> {% endif %}
+                            {% if dept_selected != None %}<span>{{ dept_selected }}</span> {% endif %}
+                        </div>
 
 
                 </div>
@@ -398,6 +337,8 @@
                         </div>
                     </div>
                 </div>
+                 </form>
+                <form action="{{ url_for('table_bp.add_course') }}" method="post">
                 <div class="searchCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                      <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
                         {% for item in course_searched%}
@@ -405,7 +346,7 @@
                             <div class="course_name">
                                 <div class="row">
                                     <div class="col-9">
-                                        <span style="font-size: 22px;">{{ item.course_name }}
+                                        <span name="" style="font-size: 22px;">{{ item.course_name }}
                                             {% if item.reg_sel == "通"%}
                                                 <span class="C_field" style="font-size: 13px;">通識</span>
                                             {% endif %}
@@ -417,7 +358,7 @@
                                             {% endif %}
                                         </span>
                                     </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ item.cid }}" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;">+</button></div>
                                 </div>
                             </div>
                             <div class="dept">
@@ -432,6 +373,7 @@
                         </div>
                 </div>
                 </form>
+
     </div>
     </div>
     </body>
