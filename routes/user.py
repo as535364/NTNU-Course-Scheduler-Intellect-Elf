@@ -1,11 +1,10 @@
 import re
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from share.db import db
+from share.login import login_required, admin_required
 from model import User
 
 user_bp = Blueprint('user_bp', __name__)
-
-# TODO login_required
 
 
 def user_form_validation(email, password, repeat_password, username=None):
@@ -18,9 +17,7 @@ def user_form_validation(email, password, repeat_password, username=None):
             error = True
 
     if email is not None:
-        print(email)
         if not re.match(r".+@.+\..+", email):
-            print(re.match(r".+@.+\..+", email))
             flash('Email 未輸入或是格式錯誤', 'error')
             error = True
 
@@ -60,7 +57,7 @@ def login():
             flash('登入成功', 'success')
             is_login = True
         else:
-            flash('登入失敗', 'error')
+            flash('帳號不存在或是帳號密碼錯誤', 'error')
             is_login = False
 
         # redirect
@@ -124,3 +121,15 @@ def profile():
             return redirect(url_for('index'))
         else:
             return redirect(url_for('user_bp.profile')), 400
+
+
+@user_bp.route('/test/user')
+@login_required
+def test_user(user):
+    return render_template('test.html', user=user)
+
+
+@user_bp.route('/test/admin')
+@admin_required
+def test_admin(user):
+    return render_template('test.html', user=user)
