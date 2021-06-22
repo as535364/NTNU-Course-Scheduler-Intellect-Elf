@@ -297,43 +297,55 @@
                     </div>
                     {# 課程類別drop down  #}
                      {# 課程類別drop down  #}
-                    <div class="dropdown">
-                        <div class="col-md-12 btn-group">
-                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span id = "btnTypeTex" name = "btnTypeTex" style="color: aliceblue">課程類別</span>
-                            </button>
-                            <ul id="typeSelect"  class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >
-                                <li><a class="dropdown-item" onclick="showType(this)" value = "Action" >Action </a></li>
-                                <li><a class="dropdown-item" onclick="showType(this)" value = "Another action">Another action </a></li>
-                                <li><a class="dropdown-item" onclick="showType(this)" value = "Something else here">Something else here </a></li>
-                            </ul>
-                            <script>
-                                function showType( item ) {
-                                  document.getElementById('btnTypeTex').innerHTML =item.innerHTML;
-                                  document.getElementById('btnTypeTex').value = item.innerHTML;
-                                }
-                            </script>
-
-                        </div>
-                    </div>
+{#                    <div class="dropdown">#}
+{#                        <div class="col-md-12 btn-group">#}
+{#                            <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                                <span id = "btnTypeTex" name = "btnTypeTex" style="color: aliceblue">課程類別</span>#}
+{#                            </button>#}
+{#                            <ul id="typeSelect"  class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >#}
+{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Action" >Action </a></li>#}
+{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Another action">Another action </a></li>#}
+{#                                <li><a class="dropdown-item" onclick="showType(this)" value = "Something else here">Something else here </a></li>#}
+{#                            </ul>#}
+{#                            <script>#}
+{#                                function showType( item ) {#}
+{#                                  document.getElementById('btnTypeTex').innerHTML =item.innerHTML;#}
+{#                                  document.getElementById('btnTypeTex').value = item.innerHTML;#}
+{#                                }#}
+{#                            </script>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+                    <select class="form-select mb-3" aria-label="Default select example" name="category">
+                      <option selected>課程列別</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
 {#                     開課系所drop down#}
-                    <div class="dropdown">
-                        <div class="col-md-12 btn-group offset-md-0 mt-3">
-                             <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span id = "btnDeptTex" name = "btnDeptTex" style="color: aliceblue">開課系所</span>
-                            </button>
-                            <ul id="typeSelect" class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >
-                                <li><a class="dropdown-item" onclick="showDept(this)" >Action </a></li>
-                                <li><a class="dropdown-item" onclick="showDept(this)">Another action </a></li>
-                                <li><a class="dropdown-item" onclick="showDept(this)">Something else here </a></li>
-                            </ul>
-                            <script>
-                                function showDept( item ) {
-                                  document.getElementById('btnDeptTex').innerHTML =item.innerHTML;
-                                }
-                            </script>
-                        </div>
-                    </div>
+{#                    <div class="dropdown">#}
+{#                        <div class="col-md-12 btn-group offset-md-0 mt-3">#}
+{#                             <button class="btn btn-info dropdown-toggle" style="text-align: left" type="button" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                                <span id = "btnDeptTex" name = "btnDeptTex" style="color: aliceblue">開課系所</span>#}
+{#                            </button>#}
+{#                            <ul id="typeSelect" class="dropdown-menu col-md-12" aria-labelledby="btnTypeTex" >#}
+{#                                <li><a class="dropdown-item" onclick="showDept(this)" >Action </a></li>#}
+{#                                <li><a class="dropdown-item" onclick="showDept(this)">Another action </a></li>#}
+{#                                <li><a class="dropdown-item" onclick="showDept(this)">Something else here </a></li>#}
+{#                            </ul>#}
+{#                            <script>#}
+{#                                function showDept( item ) {#}
+{#                                  document.getElementById('btnDeptTex').innerHTML =item.innerHTML;#}
+{#                                }#}
+{#                            </script>#}
+{#                        </div>#}
+{#                    </div>#}
+                    <select class="form-select mb-3" aria-label="Default select example" name="dept">
+                      <option selected>開課系所</option>
+                      <option value="資工系">資工系</option>
+                      <option value="通識">通識</option>
+                      <option value="共同科">共同科</option>
+                    </select>
 
                 </div>
 
