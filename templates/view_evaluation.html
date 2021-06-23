@@ -4,7 +4,11 @@
     <br>
     <div class="container-fluid" style="padding-top:20px; padding-bottom:20px; padding-left:100px; padding-right:100px;">
         <h5><span class="badge bg-info text-dark">{{ serial_no }}</span></h5>
-        <h2 style=""> {{ year }}-{{ term }} {{department}} - {{course_name}} ( {{ course_code }} ) </h2>
+        {% if nodata %}
+            <h2 style="">無課程資料 <(_ _)></h2>
+        {% else %}
+            <h2 style="">{{ year }}-{{ term }} {{department}} - {{course_name}} ( {{ course_code }} )</h2>
+        {% endif %}
         <br>
         <p>課程資訊</p>
         <hr style="height:3px;border-width:0;background-color:#46A3FF">
@@ -139,9 +143,14 @@
         </div>
         <br>
         <br>
-        <div class="btn-group btn-sm pull-right" role="group" aria-label="add or edit" style="float:right">
-            <a href="/course/add/{{ cid }}" class="btn btn-info" role="button">新增評價</a>
-            <a href="/course/edit/{{ cid }}" class="btn btn-info" role="button">編輯評價</a>
+        <div class="btn-group btn-sm" role="group" aria-label="add or edit" style="float:right">
+            {% if button_disable %}
+                <a href="/course/add/{{ cid }}" class="btn btn-primary btn-info disabled" role="button" aria-disabled="true">新增評價</a>
+                <a href="/course/edit/{{ cid }}" class="btn btn-primary btn-info disabled" role="button" aria-disabled="true">編輯評價</a>
+            {% else %}
+                <a href="/course/add/{{ cid }}" class="btn btn-info" role="button" aria-disabled={{ button_disable }}>新增評價</a>
+                <a href="/course/edit/{{ cid }}" class="btn btn-info" role="button" aria-disabled={{ button_disable }}>編輯評價</a>
+            {% endif %}
         </div>
         <br>
         <p>課程評價</p>
