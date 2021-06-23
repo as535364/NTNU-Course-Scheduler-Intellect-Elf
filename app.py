@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from share.db import db
 from routes.user import user_bp
 from routes.table import table_bp
-
+from routes.evaluation import evaluation_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
@@ -21,3 +21,4 @@ with app.app_context():
 
 app.register_blueprint(user_bp, url_prefix='/')
 app.register_blueprint(table_bp, url_prefix='/table')
+app.register_blueprint(evaluation_bp, url_prefix='/course')
