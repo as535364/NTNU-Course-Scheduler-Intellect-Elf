@@ -101,6 +101,8 @@ def edit(user):
             cool = data.cool
             gain = data.gain
             description = data.description
+            description = description.replace('<br/>', '\n')
+            description = description.replace('&nbsp', ' ')
             def_sweetness = ['', '', '', '', '', '']
             def_cool = ['', '', '', '', '', '']
             def_gain = ['', '', '', '', '', '']
