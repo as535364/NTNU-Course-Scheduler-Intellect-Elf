@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from share.login import login_required
-from collections import defaultdict
+from sqlalchemy.sql import func
 from share.db import db
-from model import Course
+from model import Course,Evaluation
 
 table_bp = Blueprint('table_bp', __name__, static_folder='static')
+
 
 
 def get_credits(user):
@@ -23,7 +24,6 @@ def spilt_time(s):
     dic = {'一': 0, '二': 1, '三': 2, '四': 3, '五': 4, '六': 5, 'A': 11, 'B': 12, 'C': 13, 'D': 14 }
     day = dic[t[0]]
     time = t[1].split('-')
-    print(time)
     start = dic[time[0]] if time[0].isalpha() else time[0]
     end = dic[time[1]] if time[1].isalpha() else time[1]
 
@@ -79,7 +79,7 @@ def table(user):
     table = parse_course_time(user_course)
     user_dept = user.dept_name
 
-    return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None )
+    return render_template('table.html', db_dept=dept_name_code, course_searched=courses, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, checked = None )
 
 
 # return redirect(url_for("login"))
@@ -99,7 +99,7 @@ def add_course(user):
         credit = get_credits(user)
         table = parse_course_time(user_course)
         user_dept = user.dept_name
-        return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None)
+        return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, sortchecked = None)
 
 
 @table_bp.route('/remove', methods=['POST'])
@@ -117,7 +117,7 @@ def remove_course(user):
         credit = get_credits(user)
         table = parse_course_time(user_course)
         user_dept = user.dept_name
-        return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept , change_color = None)
+        return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept , change_color = None, sortchecked = None)
 
 
 @table_bp.route('/search', methods=['POST'])
@@ -136,7 +136,6 @@ def search_course(user):
         # 搜尋老師
         dept_code = request.values['dept'] if request.values['dept'] != '開課系所' else None
         condition = request.values['condition']
-
         course_searched = []
         if dept_code and condition != '':
             course_searched.extend(Course.query.filter_by(course_code=condition, dept_code=dept_code).all())
@@ -150,9 +149,38 @@ def search_course(user):
             course_searched.extend(Course.query.filter_by(instructor=condition).all())
         elif dept_code and condition == '':
             course_searched.extend(Course.query.filter_by(dept_code=dept_code).all())
+        elif not dept_code and condition == '':
+            course_searched = Course.query.all()
         course_searched = list(course_searched)
-        return render_template('table.html', course_searched=course_searched, db_dept=dept_name_code, condi=condition,
-                               dept_selected=dept_name_code.get(dept_code), user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None)
+        print(request.form['check-sort'])
+
+        sort_course = []
+        for course in course_searched:
+            if request.form['check-sort'] == '1':
+                avg_cool = Evaluation.query.with_entities(func.avg(Evaluation.cool)).filter(
+                    Evaluation.course_id == course.cid).first()
+                for b in avg_cool:
+                    sort_course.append([course, b]) if( b is not None ) else sort_course.append([course, 0])
+            elif request.form['check-sort'] == '2':
+                avg_sweetness = Evaluation.query.with_entities(func.avg(Evaluation.sweetness)).filter(
+                    Evaluation.course_id == course.cid).first()
+                for b in avg_sweetness:
+                    sort_course.append([course, b]) if (b is not None) else sort_course.append([course, 0])
+            elif request.form['check-sort'] == '3':
+                avg_gain = Evaluation.query.with_entities(func.avg(Evaluation.gain)).filter(
+                    Evaluation.course_id == course.cid).first()
+                for b in avg_gain:
+                    sort_course.append([course, b]) if (b is not None) else sort_course.append([course, 0])
+
+        # for course in sort_course:
+        #     print( course )
+        s_course = sorted(sort_course, key=lambda s: s[1], reverse = True)
+        sort_course_searched = []
+        for course in (s_course):
+            sort_course_searched.append(course[0])
+        # print(sort_course_searched)
+        return render_template('table.html', course_searched=sort_course_searched, db_dept=dept_name_code, condi=condition,
+                               dept_selected=dept_name_code.get(dept_code), user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, sortchecked = request.form['check-sort'])
 
 
 @table_bp.route('/get_table', methods=['GET'])
@@ -179,5 +207,5 @@ def get_table_course(user):
         print( color_block )
     # 搜尋 --> 晚點做
 
-    return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = color_block )
+    return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = color_block, sortchecked = None )
 

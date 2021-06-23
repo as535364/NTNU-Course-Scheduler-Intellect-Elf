@@ -231,7 +231,7 @@
                                 <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
                           {% endfor %}
                         </select>
-
+                    {#搜尋了甚麼#}
                         <div style="opacity: 0.4;"><span>Search: </span>
                             {% if condi != null %}<span>{{ condi }} </span> {% endif %}
                             {% if dept_selected != None %}<span>{{ dept_selected }}</span> {% endif %}
@@ -241,27 +241,50 @@
                 </div>
 
                     <div class="sort">
-
                         <span style="font-size: 18px;">排序方式 :</span>
                         <div class="toggle" style="margin-top: 8px;margin-left: 100px">
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    課程涼度
-                                </label>
-                        </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                    課程甜度
-                            </label>
-                        </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                    課程收穫度
-                            </label>
-                        </div>
+                            {% if sortchecked == None or sortchecked == '1'%}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check1" value="1" checked>
+                                    <label class="form-check-label" for="check1">課程涼度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check2" value="2">
+                                    <label class="form-check-label" for="check2">課程甜度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check3" value="3">
+                                    <label class="form-check-label" for="check3">課程收穫度</label>
+                                </div>
+                            {% elif sortchecked == '2'%}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check1" value="1">
+                                    <label class="form-check-label" for="check1">課程涼度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check2" value="2" checked>
+                                    <label class="form-check-label" for="check2">課程甜度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check3" value="3">
+                                    <label class="form-check-label" for="check3">課程收穫度</label>
+                                </div>
+                            {% elif sortchecked == '3'%}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check1" value="1">
+                                    <label class="form-check-label" for="check1">課程涼度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check2" value="2">
+                                    <label class="form-check-label" for="check2">課程甜度</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="check-sort" id="check3" value="3" checked>
+                                    <label class="form-check-label" for="check3">課程收穫度</label>
+                                </div>
+                            {% endif %}
+
+
                         </div>
                     </div>
                 </div>
