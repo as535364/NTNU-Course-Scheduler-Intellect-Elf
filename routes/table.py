@@ -74,12 +74,13 @@ def table(user):
     credit = get_credits(user)
     courses, dept_name_code = get_all_courses_code()
     user_course = user.courses
+    allcourses = Course.query.limit(100).all()
     # parse_course_time(user_course)
 
     table = parse_course_time(user_course)
     user_dept = user.dept_name
 
-    return render_template('table.html', db_dept=dept_name_code, course_searched=courses, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, checked = None )
+    return render_template('table.html', db_dept=dept_name_code, course_searched=allcourses, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, checked = None )
 
 
 # return redirect(url_for("login"))
@@ -95,7 +96,7 @@ def add_course(user):
         if course_to_be_add not in user.courses:
             user.courses.append(course_to_be_add)
             db.session.commit()
-            print(course_to_be_add.course_name)
+            # print(course_to_be_add.course_name)
         credit = get_credits(user)
         table = parse_course_time(user_course)
         user_dept = user.dept_name
@@ -108,12 +109,12 @@ def remove_course(user):
     user_course = user.courses
     courses, dept_name_code = get_all_courses_code()
     if request.method == 'POST':
-        print(request.form.get('cid'))
+        # print(request.form.get('cid'))
         course_to_be_remove = Course.query.filter_by(cid=request.form.get('cid')).first()
         if course_to_be_remove in user.courses:
             user.courses.remove(course_to_be_remove)
             db.session.commit()
-            print(course_to_be_remove.course_name)
+            # print(course_to_be_remove.course_name)
         credit = get_credits(user)
         table = parse_course_time(user_course)
         user_dept = user.dept_name
@@ -130,29 +131,26 @@ def search_course(user):
     table = parse_course_time(user_course)
     user_dept = user.dept_name
     if request.method == 'POST':
-        # 輸入搜尋
 
-        # 搜尋課程名稱
-        # 搜尋老師
         dept_code = request.values['dept'] if request.values['dept'] != '開課系所' else None
         condition = request.values['condition']
         course_searched = []
         if dept_code and condition != '':
-            course_searched.extend(Course.query.filter_by(course_code=condition, dept_code=dept_code).all())
-            course_searched.extend(Course.query.filter_by(serial_no=condition, dept_code=dept_code).all())
-            course_searched.extend(Course.query.filter_by(course_name=condition, dept_code=dept_code).all())
-            course_searched.extend(Course.query.filter_by(instructor=condition, dept_code=dept_code).all())
+            course_searched.extend(Course.query.filter(Course.course_code.contains(condition)).filter_by(dept_code=dept_code).all())
+            course_searched.extend(Course.query.filter(Course.serial_no.contains(condition)).filter_by(dept_code=dept_code).all())
+            course_searched.extend(Course.query.filter(Course.course_name.contains(condition)).filter_by(dept_code=dept_code).all())
+            course_searched.extend(Course.query.filter(Course.instructor.contains(condition)).filter_by(dept_code=dept_code).all())
         elif not dept_code and condition != '':
-            course_searched.extend(Course.query.filter_by(course_code=condition).all())
-            course_searched.extend(Course.query.filter_by(serial_no=condition).all())
-            course_searched.extend(Course.query.filter_by(course_name=condition).all())
-            course_searched.extend(Course.query.filter_by(instructor=condition).all())
+            course_searched.extend(Course.query.filter(Course.course_code.contains(condition)).all())
+            course_searched.extend(Course.query.filter(Course.serial_no.contains(condition)).all())
+            course_searched.extend(Course.query.filter(Course.course_name.contains(condition)).all())
+            course_searched.extend(Course.query.filter(Course.instructor.contains(condition)).all())
         elif dept_code and condition == '':
             course_searched.extend(Course.query.filter_by(dept_code=dept_code).all())
         elif not dept_code and condition == '':
             course_searched = Course.query.all()
         course_searched = list(course_searched)
-        print(request.form['check-sort'])
+        # print(request.form['check-sort'])
 
         sort_course = []
         for course in course_searched:
@@ -195,16 +193,16 @@ def get_table_course(user):
     # 選課志願
         # print(request.args.get('day'))
         time = request.args.get('day')
-        print(time)
+        # print(time)
         t = time.split('-')
-        print(t[0], t[1])
+        # print(t[0], t[1])
         user_course = table[int(t[0])-1][int(t[1])]
-        print(user_course)
+        # print(user_course)
 
         tmp = [int(t[0]), int(t[1])]
         color_block = []
         color_block.append(tmp)
-        print( color_block )
+        # print( color_block )
     # 搜尋 --> 晚點做
 
     return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = color_block, sortchecked = None )
