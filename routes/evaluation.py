@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from sqlalchemy.sql import func
 from model import Evaluation, Course
-from share.login import login_required, admin_required
+from share.login import login_required
 from share.db import db
 
 
