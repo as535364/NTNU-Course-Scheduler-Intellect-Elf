@@ -1,0 +1,230 @@
+.courseTable {
+     /*height: 100px;*/
+     /*width: 300px;*/
+    float: left;
+    margin-bottom: 200px;
+    margin-right: 35px;
+
+ }
+
+
+.table-bordered{
+
+    width:710px;
+    height:1640px;
+    word-wrap: break-word;
+   	table-layout: fixed;
+    border-collapse: collapse;
+    overflow:hidden;
+    background: #F5FEFF;
+    border-color: #2fc6de;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    float: left;
+    align-content: center;
+    vertical-align:middle;
+}
+
+.courses{
+    float: left;
+}
+
+.selectedCourse{
+    /*up right bottom left*/
+    margin: 20px 0px 60px 0px;
+    height: 400px;
+    width: 500px;
+    background-color: #E2F6FF;
+    border-radius: 5px;
+}
+.searchCourse{
+
+    /*up right bottom left*/
+    margin: 10px 0px 100px 0px;
+    height: 400px;
+    width: 500px;
+
+    background-color: #E2F6FF;
+    border-radius: 5px;
+}
+
+
+.credits{
+    /*margin-top: 50px;*/
+    line-height: 70px;/*與包著的區塊設定同高度即可*/
+}
+
+
+.content{
+    float: right;
+}
+
+.info{
+    height: 130px;
+    width: 460px;
+    margin: 10px auto;
+    background: #FFFF;
+    border-radius: 15px;
+
+    padding: 10px 5px 20px 20px;
+    position:relative;
+
+}
+.course_name{
+    height: 70px;
+    width: 400px;
+}
+.dept{
+    /*float: bottom;*/
+    height: 28px;
+    width: 420px;
+    vertical-align:bottom;
+    padding-left: 5px;
+    bottom:0px;
+}
+
+.dropdown-toggle::after {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    color: aliceblue;
+}
+
+.tmp{
+    display: block;
+    background: #95decd;
+}
+
+.title{
+    border-radius: 10px;
+    margin-top: 30px;
+    height: 45px;
+    width: 130px;
+    background: #6EB5D8;
+}
+
+.search_sort{
+    height: 150px;
+    width: 500px;
+    margin-bottom: 30px;
+    /*background: #95decd;*/
+}
+.searching{
+    height: 150px;
+    width: 250px;
+    float:left;
+    /*background: #95decd;*/
+}
+.sort{
+    height: 150px;
+    width: 250px;
+    float: left;
+    padding-top: 25px;
+    padding-left: 20px;
+    /*background: #cccc;*/
+}
+
+.scrollspy-example {
+    position: relative;
+    height: 400px;
+    margin-top: .5rem;
+    overflow: auto;
+}
+/*=========課程選修 領域=============*/
+.A_field{
+    height: 30px;
+    width: 40px;
+    align-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background: #ffbe99;
+}
+.B_field{
+    height: 30px;
+    width: 40px;
+    align-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background: #bfffad;
+}
+.C_field{
+    height: 30px;
+    width: 40px;
+    align-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background: #ffe86b;
+}
+/*=========課程選修 領域=============*/
+.info-block{
+    padding: 8px 3px 3px 3px;
+    height: 105px;
+    overflow: hidden;
+    /*選取到課程的顏色*/
+    /*background: #bfffad;*/
+    position: absolute;
+}
+
+.A_course{
+    padding: 4px;
+    height: 30px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 108px;
+    color: #FFFF;
+    align-content: center;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    background: #f57f58;
+    vertical-align:middle;
+    font-size: 15px;
+
+}
+.B_course{
+     padding: 4px;
+    height: 30px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 108px;
+    color: #FFFF;
+    align-content: center;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    vertical-align:middle;
+    background: #2cc791;
+}
+.C_course{
+    padding: 4px;
+    height: 30px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 108px;
+    color: #FFFF;
+    align-content: center;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    vertical-align:middle;
+    background: #f5cc14;
+}
+
+.D_course{
+    padding: 5px;
+    height: 35px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 108px;
+    color: #FFFF;
+    align-content: center;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    vertical-align:middle;
+    background: #f5cc14;
+}
+
+
+
+

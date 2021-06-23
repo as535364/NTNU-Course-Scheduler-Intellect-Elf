@@ -20,5 +20,5 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(user_bp, url_prefix='/')
-app.register_blueprint(table_bp, url_prefix='/')
+app.register_blueprint(table_bp, url_prefix='/table')
 app.register_blueprint(evaluation_bp, url_prefix='/course')

@@ -1,68 +1,310 @@
 {% extends "base.html" %}
+{% block head %}
+    <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
+{% endblock head %}
 {% block title %}查詢課表{% endblock title%}
 {% block content %}
+
+
+    <style>
+        #an
+         {
+            width:100%;
+            height:100%;
+            border-color: #F5FEFF;
+            z-index:9999;
+            position: relative;
+            opacity: 0.5;
+        }
+        #day
+        {
+            background: #2fc6de;
+            align-content: center;
+            vertical-align:middle;
+            margin-left: 20px;
+            text-align:center;
+            color: #435c59;
+        }
+
+
+        #session{
+            font-size: 20px;
+            text-align: center;
+            height:81px;
+            color: #435c59;
+        }
+        #t{
+            height: 18px;
+            font-size: 15px;
+            color: #8cd4cb;
+        {#background: #66CBC9;#}
+        }
+        #block{
+            height: 102px;
+        }
+
+        {##hole-form{#}
+        {#    background-color: #7083CE;#}
+    </style>
     <meta charset="utf-8">
-    <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
     <body>
-        <table class="table table-bordered">
-                <tr>
-                        <th>節次/星期</th>
-                        <th>星期一</th>
-                        <th>星期二</th>
-                        <th>星期三</th>
-                        <th>星期四</th>
-                        <th>星期五</th>
-                </tr>
-                <tr>
-                        <td>第一節</td>
-                        <td rowspan="2">通識教育</td>
-                        <td></td>
-                        <td></td>
-                        <td rowspan="3">微積分</td>
-                        <td rowspan="3"></td>
-                </tr>
-                <tr>
-                        <td>第二節</td>
-                        <td rowspan="2">離散數學</td>
-                        <td rowspan="2">英文(一)</td>
-                </tr>
-                <tr>
-                        <td>第三節</td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第四節</td>
-                        <td></td>
-                        <td rowspan="2">體育(一)</td>
-                        <td rowspan="3">計算機概論</td>
-                        <td rowspan="3">數位邏輯設計</td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第五節</td>
-                        <td></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td>第六節</td>
-                        <td></td>
-                        <td></td>
-                        <td rowspan="2">韻律教學法</td>
-                </tr>
-                <tr>
-                        <td>第七節</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                </tr>
+    <div class = "courseTable">
+        <table frame=void id = "hole-form">
+            <tr>
+                <td>
+                    <table>
+                        <tr style="height:40px; background-color: #7083CE;"></tr>
+                        <tr id = "t"><td>07:10</td></tr>
+                        <tr id = session><td>0</td></tr>
+                        <tr id = "t"><td>08:10</td></tr>
+                        <tr id = session><td>1</td></tr>
+                        <tr id = "t"><td>09:10</td></tr>
+                        <tr id = session><td>2</td></tr>
+                        <tr id = "t"><td>10:20</td></tr>
+                        <tr id = session><td>3</td></tr>
+                        <tr id = "t"><td>11:20</td></tr>
+                        <tr id = session><td>4</td></tr>
+                        <tr id = "t"><td>12:20</td></tr>
+                        <tr id = session><td>5</td></tr>
+                        <tr id = "t"><td>13:20</td></tr>
+                        <tr id = session><td>6</td></tr>
+                        <tr id = "t"><td>14:20</td></tr>
+                        <tr id = session><td>7</td></tr>
+                        <tr id = "t"><td>15:30</td></tr>
+                        <tr id = session><td>8</td></tr>
+                        <tr id = "t"><td>16:30</td></tr>
+                        <tr id = session><td>9</td></tr>
+                        <tr id = "t"><td>17:30</td></tr>
+                        <tr id = session><td>10</td></tr>
+                        <tr id = "t"><td>18:40</td></tr>
+                        <tr id = session><td>A</td></tr>
+                        <tr id = "t"><td>19:35</td></tr>
+                        <tr id = session><td>B</td></tr>
+                        <tr id = "t"><td>20:30</td></tr>
+                        <tr id = session><td>C</td></tr>
+                        <tr id = "t"><td>21:25</td></tr>
+                        <tr id = session><td>D</td></tr>
+
+                    </table>
+                </td>
+                <td align="left" valign="top">
+                <form action="{{ url_for('table_bp.get_table_course',day = name ) }}" method="get">
+                    <table frame=void class="table-bordered" style="box-shadow:1px 2px 5px 1px #cccc;">
+                        <tr>
+                            <th id="day" style="-moz-border-radius-topleft: 10px; ">星期一</th>
+                            <th id="day">星期二</th>
+                            <th id="day">星期三</th>
+                            <th id="day">星期四</th>
+                            <th id="day">星期五</th>
+                            <th id="day" style="-moz-border-radius-topright: 10px">星期六</th>
+                        </tr>
+                        {# 第 0 節#}
+                         {% for i in range(15) %}
+                             <tr>
+                            {%for day in table %}
+                            {% set outer_loop = loop %}
+                                <td id="block">
+                                {% if change_color != None %}
+                                    <div id="block" {% for block in change_color %} {% if block[1] == i and block[0] == outer_loop.index %}style="background-color: #7083CE"{% endif %}{% endfor %}>
+                                        <div class="info-block">
+                                        {% for course in day[i] %}
+                                            {%  if loop.index <= 2 %}
+                                                {% if course.reg_sel == "通"%}
+                                                    <div class="C_course">{{ course.course_name }} </div>
+                                                {% else %}
+                                                    {%if course.department == user_dept %}
+                                                        <div class="A_course">{{ course.course_name }} </div>
+                                                    {% else %}
+                                                        <div class="B_course">{{ course.course_name }} </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </div>
+                                        <button id="an" name="day" value="{{ loop.index }}-{{ i }}" type="submit" class="btn btn-outline-info "></button>
+                                    </div>
+                                {% else %}
+                                    <div id="block">
+                                        <div class="info-block">
+                                        {% for course in day[i] %}
+                                            {%  if loop.index <= 2 %}
+                                                {% if course.reg_sel == "通"%}
+                                                    <div class="C_course">{{ course.course_name }} </div>
+                                                {% else %}
+                                                    {%if course.department == user_dept %}
+                                                        <div class="A_course">{{ course.course_name }} </div>
+                                                    {% else %}
+                                                        <div class="B_course">{{ course.course_name }} </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </div>
+                                        <button id="an" name="day" value="{{ loop.index }}-{{ i }}" type="submit" class="btn btn-outline-info "></button>
+                                    </div>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                {#                 <td rowspan="3">微積分</td>#}
+
+                             </tr>
+                        {% endfor %}
+                    </table>
+                </form>
+                </td>
+            </tr>
         </table>
-    </body>
-    <div class="container">
+    </div>
+    <div class="courses">
+            {# 右邊區塊       #}
+            <div class="credits">
             <div class="row">
-                <div class="col"><span>1</span></div>
-                <div class="col"><span>2</span></div>
-                <div class="col"><span>3</span></div>
+                <div class="col-5"><span style="font-size:20px;">目前總學分: <span>{{ credit[0] }}</span></span></div>
+                <div class="col"><span style="color:grey;"> 系上學分: <span>{{ credit[1] }}</span></span></div>
+                <div class="col"><span style="color:grey;"> 通識學分: <span>{{ credit[2] }}</span></span></div>
             </div>
-        </div>
+            </div>
+            <div class="content" >
+                <div class="title" >
+                    <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">選課志願</span>
+                </div>
+                <form action="{{ url_for('table_bp.remove_course') }}" method="post">
+                <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
+                    <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
+                        {% for course in user_course %}
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <span style="font-size: 22px;">{{ course.course_name }}
+                                            {% if course.reg_sel == "通"%}
+                                                <span class="C_field" style="font-size: 13px;">通識</span>
+                                            {% endif %}
+                                            {%if course.reg_sel == "選"%}
+                                                <span class="B_field" style="font-size: 13px;">選修</span>
+                                            {% endif %}
+                                            {%if course.reg_sel == "必"%}
+                                                <span class="A_field" style="font-size: 13px;">必修</span>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9" style="color:#7083CE"> <span>{{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
+                                    <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        </div>
+                </div>
+                </form>
+                <div class="title">
+                    <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">加選課程</span>
+                </div>
+            {# SEARCH COURSE#}
+                <form action="{{ url_for('table_bp.search_course') }}" method="post">
+                    <div class="search_sort">
+                    <div class="searching">
+                    {# search bar  #}
+                   <div class="col offset-md-0 mt-3">
+                        <div class="input-group mb-3">
+                                <input type="text" name="condition" class="form-control" placeholder="課號 / 課程名稱 / 老師" aria-label="Recipient's username">
+                                <button type="submit" class="btn btn-outline-info" >搜尋</button>
+                        </div>
+                    </div>
+
+{#                    {% if (dept == null or dept == None) or (code == null or code == None) %}#}
+                        <select class="form-select mb-3" aria-label="Default select example" name="dept">
+                          <option selected>開課系所</option>
+                          {% for dept_code, dept_name in db_dept.items() %}
+                                <option value={{ dept_code }}>{{ dept_code }} {{ dept_name }}</option>
+                          {% endfor %}
+                        </select>
+
+                        <div style="opacity: 0.4;"><span>Search: </span>
+                            {% if condi != null %}<span>{{ condi }} </span> {% endif %}
+                            {% if dept_selected != None %}<span>{{ dept_selected }}</span> {% endif %}
+                        </div>
+
+
+                </div>
+
+                    <div class="sort">
+
+                        <span style="font-size: 18px;">排序方式 :</span>
+                        <div class="toggle" style="margin-top: 8px;margin-left: 100px">
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    課程涼度
+                                </label>
+                        </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                    課程甜度
+                            </label>
+                        </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                    課程收穫度
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                 </form>
+                <form action="{{ url_for('table_bp.add_course') }}" method="post">
+                <div class="searchCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
+                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
+                        {% for course in course_searched%}
+                         <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
+                            <div class="course_name">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span name="" style="font-size: 22px;">{{ course.course_name }}
+                                            {% if course.reg_sel == "通"%}
+                                                <span class="C_field" style="font-size: 13px;">通識</span>
+                                            {% endif %}
+                                            {%if course.reg_sel == "選"%}
+                                                <span class="B_field" style="font-size: 13px;">選修</span>
+                                            {% endif %}
+                                            {%if course.reg_sel == "必"%}
+                                                <span class="A_field" style="font-size: 13px;">必修</span>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                </div>
+                            </div>
+                            <div class="dept">
+                                <div class="row">
+                                    <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
+                                    <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        </div>
+                </div>
+                </form>
+
+    </div>
+    </div>
+    </body>
+
+
 {% endblock content %}
