@@ -4,14 +4,13 @@ from model import Evaluation, Course
 from share.login import login_required, admin_required
 from share.db import db
 
-
 evaluation_bp = Blueprint('evaluation_bp', __name__)
 
 
 @evaluation_bp.route('/view/<cid>', methods=['GET'])
 def view(cid):
     if request.method == 'GET':
-        #課程資訊
+        # 課程資訊
         course_data = Course.query.filter_by(cid=cid).first()
         serial_no = course_data.serial_no
         year = course_data.year
@@ -31,12 +30,16 @@ def view(cid):
         location = course_data.location
         note = course_data.note
         # 課程評分
-        avg_sweetness = Evaluation.query.with_entities(func.avg(Evaluation.sweetness)).filter(Evaluation.course_id == cid).first()
+        avg_sweetness = Evaluation.query.with_entities(func.avg(Evaluation.sweetness)).filter(
+            Evaluation.course_id == cid).first()
         avg_cool = Evaluation.query.with_entities(func.avg(Evaluation.cool)).filter(Evaluation.course_id == cid).first()
         avg_gain = Evaluation.query.with_entities(func.avg(Evaluation.gain)).filter(Evaluation.course_id == cid).first()
         # 課程評價
         evaluation_data = Evaluation.query.filter_by(course_id=cid).all()
-        return render_template('view_evaluation.html', cid=cid, evaluation_data=evaluation_data, sweetness=avg_sweetness[0], cool=avg_cool[0], gain=avg_gain[0],
+        for eva_data in evaluation_data:
+            eva_data.description = eva_data.description.split('\n')
+        return render_template('view_evaluation.html', cid=cid, evaluation_data=evaluation_data,
+                               sweetness=avg_sweetness[0], cool=avg_cool[0], gain=avg_gain[0],
                                serial_no=serial_no, term=term,
                                year=year, department=department, course_name=course_name, course_code=course_code,
                                restrict=restrict, quota=quota, authorize_quota=authorize_quota,
@@ -47,7 +50,6 @@ def view(cid):
 @evaluation_bp.route('/add/<cid>', methods=['GET', 'POST'])
 @login_required
 def add(user, cid):
-    print(user)
     if request.method == 'GET':
         checkdata = Evaluation.query.filter_by(username=user.username, course_id=cid).first()
         error = False
@@ -80,8 +82,6 @@ def add(user, cid):
             flash('評價勿輸入超過512個字元', 'error')
             error = True
         if not error:
-            description = description.replace('\n', '<br/>')
-            description = description.replace(' ', '&nbsp')
             evaluation = Evaluation(username=user.username, course_id=cid, sweetness=sweetness, cool=cool, gain=gain,
                                     description=description)
             db.session.add(evaluation)
@@ -107,8 +107,6 @@ def edit(user, cid):
             cool = data.cool
             gain = data.gain
             description = data.description
-            description = description.replace('<br/>', '\n')
-            description = description.replace('&nbsp', ' ')
             def_sweetness = ['', '', '', '', '', '']
             def_cool = ['', '', '', '', '', '']
             def_gain = ['', '', '', '', '', '']
@@ -147,8 +145,6 @@ def edit(user, cid):
             flash('評價勿輸入超過512個字元', 'error')
             error = True
         if not error:
-            description = description.replace('\n', '<br/>')
-            description = description.replace(' ', '&nbsp')
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(sweetness=sweetness))
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(cool=cool))
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(gain=gain))
@@ -159,3 +155,12 @@ def edit(user, cid):
         else:
             return redirect(url_for('evaluation_bp.edit', cid=cid))
 
+
+@evaluation_bp.route('/delete/<cid>', methods=['GET', 'POST'])
+@login_required
+def delete_evaluation(user, cid):
+    data = Evaluation.query.filter_by(username=user.username, course_id=cid).first()
+    db.session.delete(data)
+    db.session.commit()
+    flash('評價刪除成功', 'success')
+    return redirect(url_for('evaluation_bp.view', cid=cid))

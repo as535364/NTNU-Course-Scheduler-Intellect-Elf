@@ -74,7 +74,13 @@
                                 <span style="color:#559ACC">&nbsp&nbsp&nbsp甜度 : {{ evaluation.sweetness }}&nbsp;&nbsp;涼度 : {{ evaluation.cool }}&nbsp;&nbsp;收穫 : {{ evaluation.gain }}</span>
                             </div>
                             <div class="container-fluid" style="padding-top:5px;">
-                                <p>{% autoescape false %}{{ evaluation.description }}{% endautoescape %}</p>
+                                <span> {%- for line in evaluation.description -%}
+                                        {{ line }}
+                                            {%- if not loop.last -%}
+                                                <br />
+                                            {%- endif -%}
+                                        {%- endfor -%}
+                                </span>
                             </div>
                         </div>
                   </li>
