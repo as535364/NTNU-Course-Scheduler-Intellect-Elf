@@ -20,10 +20,14 @@ def get_credits(user):
 
 def spilt_time(s):
     t = str(s).split(' ')
-    dic = {'一': 0, '二': 1, '三': 2, '四': 3, '五': 4, '六': 5 }
+    dic = {'一': 0, '二': 1, '三': 2, '四': 3, '五': 4, '六': 5, 'A': 11, 'B': 12, 'C': 13, 'D': 14 }
     day = dic[t[0]]
     time = t[1].split('-')
-    return day, time[0], time[1]
+    print(time)
+    start = dic[time[0]] if time[0].isalpha() else time[0]
+    end = dic[time[1]] if time[1].isalpha() else time[1]
+
+    return day, start, end
 
 
 def parse_course_time(courses):
@@ -33,12 +37,7 @@ def parse_course_time(courses):
     for j in range(6):
         for i in range(15):
             table[j].append([])
-            # table[2][i + 1] = list()
-            # table[3][i + 1] = list()
-            # table[4][i + 1] = list()
-            # table[5][i + 1] = list()
-            # table['六'][i + 1] = list()
-    # print(type(day))
+
     for course in courses:
         day, start, end = spilt_time(course.time)
         for i in range( int(start), int(end)+1 ):
