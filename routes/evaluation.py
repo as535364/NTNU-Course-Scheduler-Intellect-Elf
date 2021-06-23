@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from sqlalchemy.sql import func
 from model import Evaluation, Course
-from share.login import login_required
+from share.login import login_required, admin_required
 from share.db import db
 
 
@@ -80,6 +80,8 @@ def add(user, cid):
             flash('評價勿輸入超過512個字元', 'error')
             error = True
         if not error:
+            description = description.replace('\n', '<br/>')
+            description = description.replace(' ', '&nbsp')
             evaluation = Evaluation(username=user.username, course_id=cid, sweetness=sweetness, cool=cool, gain=gain,
                                     description=description)
             db.session.add(evaluation)
@@ -145,6 +147,8 @@ def edit(user, cid):
             flash('評價勿輸入超過512個字元', 'error')
             error = True
         if not error:
+            description = description.replace('\n', '<br/>')
+            description = description.replace(' ', '&nbsp')
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(sweetness=sweetness))
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(cool=cool))
             Evaluation.query.filter_by(username=user.username, course_id=cid).update(dict(gain=gain))
