@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}編輯課程評價{% endblock title%}
+{% block content %}
+  <div class="container-fluid" style="padding-top:20px; padding-bottom:20px; padding-left:100px; padding-right:100px;">
+      <dev style="float:right"><a href="/course/delete/{{ cid }}" class="btn btn-danger" role="button">刪除評價</a></dev>
+      <h2 align="center"> 編輯課程評價 </h2>
+      <hr style="height:3px;border-width:0;background-color:#46A3FF">
+        <div class="container-fluid" style="border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:40px; padding-right:40px;">
+            <form action="{{ url_for('evaluation_bp.edit', cid=cid) }}" method="post">
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">甜度</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sweet" id="sweet1" value="1" {{ def_sweetness[1] }}>
+                <label class="form-check-label" for="sweet1"> 1 非常不甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sweet" id="sweet2" value="2" {{ def_sweetness[2] }}>
+                <label class="form-check-label" for="sweet2"> 2 不甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sweet" id="sweet3" value="3" {{ def_sweetness[3] }}>
+                <label class="form-check-label" for="sweet3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sweet" id="sweet4" value="4" {{ def_sweetness[4] }}>
+                <label class="form-check-label" for="sweet4"> 4 甜 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sweet" id="sweet5" value="5" {{ def_sweetness[5] }}>
+                <label class="form-check-label" for="sweet5">5 非常甜 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">涼度</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cool" id="cool1" value="1" {{ def_cool[1] }}>
+                <label class="form-check-label" for="cool1"> 1 非常不涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cool" id="cool2" value="2" {{ def_cool[2] }}>
+                <label class="form-check-label" for="cool2"> 2 不涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cool" id="cool3" value="3" {{ def_cool[3] }}>
+                <label class="form-check-label" for="cool3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cool" id="cool4" value="4" {{ def_cool[4] }}>
+                <label class="form-check-label" for="cool4"> 4 涼 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cool" id="cool5" value="5" {{ def_cool[5] }}>
+                <label class="form-check-label" for="cool5">5 非常涼 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">收穫</span></div>
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gain" id="gain1" value="1" {{ def_gain[1] }}>
+                <label class="form-check-label" for="gain1"> 1 非常有收穫 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gain" id="gain2" value="2" {{ def_gain[2] }}>
+                <label class="form-check-label" for="gain2"> 2 沒收獲 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gain" id="gain3" value="3" {{ def_gain[3] }}>
+                <label class="form-check-label" for="gain3"> 3 普通 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gain" id="gain4" value="4" {{ def_gain[4] }}>
+                <label class="form-check-label" for="gain4"> 4 有收穫 </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gain" id="gain5" value="5" {{ def_gain[5] }}>
+                <label class="form-check-label" for="gain5">5 非常有收穫 </label>
+            </div>
+            <br><br><br>
+            <div><span style="background:#ACDBF6; border-radius:15px; text-align:center; width:100px;display:inline-block;">課程評價</span></div>
+            <br>
+                <div class="form-group">
+		            <textarea name="description" class="form-control" rows="6">{{ description }}</textarea>
+	            </div>
+            <br><br>
+            <button type="submit" class="btn btn-primary">儲存</button>
+            </form>
+        </div>
+  </div>
+{% endblock content %}
