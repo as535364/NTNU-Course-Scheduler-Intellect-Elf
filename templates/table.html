@@ -4,7 +4,7 @@
 {% endblock head %}
 {% block title %}查詢課表{% endblock title%}
 {% block content %}
-{#<div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>#}
+
 
     <style>
         #an
@@ -40,7 +40,7 @@
         {#background: #66CBC9;#}
         }
         #block{
-            height: 105px;
+            height: 102px;
         }
 
         {##hole-form{#}
@@ -88,6 +88,7 @@
                     </table>
                 </td>
                 <td align="left" valign="top">
+                <form action="{{ url_for('table_bp.get_table_course',day = name ) }}" method="get">
                     <table frame=void class="table-bordered" style="box-shadow:1px 2px 5px 1px #cccc;">
                         <tr>
                             <th id="day" style="-moz-border-radius-topleft: 10px; ">星期一</th>
@@ -97,140 +98,65 @@
                             <th id="day">星期五</th>
                             <th id="day" style="-moz-border-radius-topright: 10px">星期六</th>
                         </tr>
-                        <tr>
-                            <td id="block">
-                                <div id="block">
-                                    <div class="info-block">
-                                        <div class="C_course">科技產業營業秘密保護與智慧財產權 </div>
-                                        <div class="B_course">教育心理學</div>
-                                        <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                        {# 第 0 節#}
+                         {% for i in range(15) %}
+                             <tr>
+                            {%for day in table %}
+                            {% set outer_loop = loop %}
+                                <td id="block">
+                                {% if change_color != None %}
+                                    <div id="block" {% for block in change_color %} {% if block[1] == i and block[0] == outer_loop.index %}style="background-color: #7083CE"{% endif %}{% endfor %}>
+                                        <div class="info-block">
+                                        {% for course in day[i] %}
+                                            {%  if loop.index <= 2 %}
+                                                {% if course.reg_sel == "通"%}
+                                                    <div class="C_course">{{ course.course_name }} </div>
+                                                {% else %}
+                                                    {%if course.department == user_dept %}
+                                                        <div class="A_course">{{ course.course_name }} </div>
+                                                    {% else %}
+                                                        <div class="B_course">{{ course.course_name }} </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                                            {% endif %}
+                                        {% endfor %}
+
                                     </div>
+                                        <button id="an" name="day" value="{{ loop.index }}-{{ i }}" type="submit" class="btn btn-outline-info "></button>
+                                    </div>
+                                {% else %}
+                                    <div id="block">
+                                        <div class="info-block">
+                                        {% for course in day[i] %}
+                                            {%  if loop.index <= 2 %}
+                                                {% if course.reg_sel == "通"%}
+                                                    <div class="C_course">{{ course.course_name }} </div>
+                                                {% else %}
+                                                    {%if course.department == user_dept %}
+                                                        <div class="A_course">{{ course.course_name }} </div>
+                                                    {% else %}
+                                                        <div class="B_course">{{ course.course_name }} </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <div style="text-align: center; font-size: 15px; font-weight:bold; ">. . .</div>
+                                            {% endif %}
+                                        {% endfor %}
 
-                                    <button id="an" type="button" class="btn btn-outline-primary "></button>
-                                </div>
-
-                            </td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
+                                    </div>
+                                        <button id="an" name="day" value="{{ loop.index }}-{{ i }}" type="submit" class="btn btn-outline-info "></button>
+                                    </div>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
                 {#                 <td rowspan="3">微積分</td>#}
 
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
-                        <tr>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                            <td id="block"><button id="an" type="button" class="btn btn-outline-info "></button></td>
-                        </tr>
+                             </tr>
+                        {% endfor %}
                     </table>
+                </form>
                 </td>
             </tr>
         </table>
@@ -239,40 +165,41 @@
             {# 右邊區塊       #}
             <div class="credits">
             <div class="row">
-                <div class="col-5"><span style="font-size:20px;">目前總學分: <span>27</span></span></div>
-                <div class="col"><span style="color:grey;"> 系上學分: <span>12</span></span></div>
-                <div class="col"><span style="color:grey;"> 通識學分: <span>4</span></span></div>
+                <div class="col-5"><span style="font-size:20px;">目前總學分: <span>{{ credit[0] }}</span></span></div>
+                <div class="col"><span style="color:grey;"> 系上學分: <span>{{ credit[1] }}</span></span></div>
+                <div class="col"><span style="color:grey;"> 通識學分: <span>{{ credit[2] }}</span></span></div>
             </div>
             </div>
             <div class="content" >
                 <div class="title" >
                     <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">選課志願</span>
                 </div>
+                <form action="{{ url_for('table_bp.remove_course') }}" method="post">
                 <div class="selectedCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                     <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-                        {% for item in user_course %}
+                        {% for course in user_course %}
                          <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
                                     <div class="col-10">
-                                        <span style="font-size: 22px;">{{ item.course_name }}
-                                            {% if item.reg_sel == "通"%}
+                                        <span style="font-size: 22px;">{{ course.course_name }}
+                                            {% if course.reg_sel == "通"%}
                                                 <span class="C_field" style="font-size: 13px;">通識</span>
                                             {% endif %}
-                                            {%if item.reg_sel == "選"%}
+                                            {%if course.reg_sel == "選"%}
                                                 <span class="B_field" style="font-size: 13px;">選修</span>
                                             {% endif %}
-                                            {%if item.reg_sel == "必"%}
+                                            {%if course.reg_sel == "必"%}
                                                 <span class="A_field" style="font-size: 13px;">必修</span>
                                             {% endif %}
                                         </span>
                                     </div>
-                                    <div class="col" style="height: 25px;"><button type="button" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
                                 </div>
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9" style="color:#7083CE"> <span>{{ item.serial_no }} / {{ item.instructor }} / {{ item.credits }} 學分</span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>{{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
                                     <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
                                 </div>
                             </div>
@@ -281,6 +208,7 @@
 
                         </div>
                 </div>
+                </form>
                 <div class="title">
                     <span style="color: white; text-align: center; display:block;line-height:45px;font-size:21px;">加選課程</span>
                 </div>
@@ -341,29 +269,29 @@
                 <form action="{{ url_for('table_bp.add_course') }}" method="post">
                 <div class="searchCourse" style="box-shadow:1px 2px 5px 1px #cccc;">
                      <div data-spy="scroll"  data-offset="0" class="scrollspy-example">
-                        {% for item in course_searched%}
+                        {% for course in course_searched%}
                          <div class="info" style="box-shadow:1px 2px 5px 1px #c2e0ed;">
                             <div class="course_name">
                                 <div class="row">
                                     <div class="col-9">
-                                        <span name="" style="font-size: 22px;">{{ item.course_name }}
-                                            {% if item.reg_sel == "通"%}
+                                        <span name="" style="font-size: 22px;">{{ course.course_name }}
+                                            {% if course.reg_sel == "通"%}
                                                 <span class="C_field" style="font-size: 13px;">通識</span>
                                             {% endif %}
-                                            {%if item.reg_sel == "選"%}
+                                            {%if course.reg_sel == "選"%}
                                                 <span class="B_field" style="font-size: 13px;">選修</span>
                                             {% endif %}
-                                            {%if item.reg_sel == "必"%}
+                                            {%if course.reg_sel == "必"%}
                                                 <span class="A_field" style="font-size: 13px;">必修</span>
                                             {% endif %}
                                         </span>
                                     </div>
-                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ item.cid }}" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;">+</button></div>
+                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-success btn-sm" style="border-radius:30%;float:right;">+</button></div>
                                 </div>
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ item.serial_no }} / {{ item.instructor }} / {{ item.credits }} 學分</span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
                                     <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
                                 </div>
                             </div>

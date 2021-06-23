@@ -166,8 +166,8 @@
 }
 
 .A_course{
-    padding: 5px;
-    height: 35px;
+    padding: 4px;
+    height: 30px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
@@ -182,8 +182,8 @@
 
 }
 .B_course{
-     padding: 5px;
-    height: 35px;
+     padding: 4px;
+    height: 30px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
@@ -196,8 +196,8 @@
     background: #2cc791;
 }
 .C_course{
-    padding: 5px;
-    height: 35px;
+    padding: 4px;
+    height: 30px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
