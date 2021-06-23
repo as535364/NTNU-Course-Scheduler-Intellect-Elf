@@ -194,12 +194,16 @@
                                             {% endif %}
                                         </span>
                                     </div>
-                                    <div class="col" style="height: 25px;"><button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button></div>
+                                    <div class="col" style="height: 25px;">
+                                        <form action="{{ url_for('table_bp.remove_course') }}" method="post">
+                                            <button type="submit" name="cid" value="{{ course.cid }}" class="btn btn-outline-danger btn-sm" style="border-radius:30%;float:right;width: 28px;">-</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9" style="color:#7083CE"> <span>{{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>{{ course.time }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
                                     <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
                                 </div>
                             </div>
@@ -269,7 +273,7 @@
                                     <input class="form-check-input" type="radio" name="check-sort" id="check3" value="3">
                                     <label class="form-check-label" for="check3">課程收穫度</label>
                                 </div>
-                            {% elif sortchecked == '3'%}
+                            {% else %}
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="check-sort" id="check1" value="1">
                                     <label class="form-check-label" for="check1">課程涼度</label>
@@ -314,7 +318,7 @@
                             </div>
                             <div class="dept">
                                 <div class="row">
-                                    <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
+                                    <div class="col-9" style="color:#7083CE"> <span>{{ course.time }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
                                     <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
                                 </div>
                             </div>
