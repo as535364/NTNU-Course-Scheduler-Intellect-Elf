@@ -4,6 +4,7 @@ from model import Evaluation, Course
 from share.login import login_required, admin_required
 from share.db import db
 
+
 evaluation_bp = Blueprint('evaluation_bp', __name__)
 
 
@@ -35,11 +36,11 @@ def view(cid):
         avg_cool = Evaluation.query.with_entities(func.avg(Evaluation.cool)).filter(Evaluation.course_id == cid).first()
         avg_gain = Evaluation.query.with_entities(func.avg(Evaluation.gain)).filter(Evaluation.course_id == cid).first()
         # 課程評價
-        evaluation_data = Evaluation.query.filter_by(course_id=cid).all()
+        evaluation_data = course_data.evaluation
         for eva_data in evaluation_data:
             eva_data.description = eva_data.description.split('\n')
         return render_template('view_evaluation.html', cid=cid, evaluation_data=evaluation_data,
-                               sweetness=avg_sweetness[0], cool=avg_cool[0], gain=avg_gain[0],
+                               avg_sweetness=avg_sweetness[0], avg_cool=avg_cool[0], avg_gain=avg_gain[0],
                                serial_no=serial_no, term=term,
                                year=year, department=department, course_name=course_name, course_code=course_code,
                                restrict=restrict, quota=quota, authorize_quota=authorize_quota,
@@ -107,18 +108,12 @@ def edit(user, cid):
             cool = data.cool
             gain = data.gain
             description = data.description
-            def_sweetness = ['', '', '', '', '', '']
-            def_cool = ['', '', '', '', '', '']
-            def_gain = ['', '', '', '', '', '']
-            for i in range(1, 6):
-                if i == sweetness:
-                    def_sweetness[i] = 'checked'
-            for i in range(1, 6):
-                if i == cool:
-                    def_cool[i] = 'checked'
-            for i in range(1, 6):
-                if i == gain:
-                    def_gain[i] = 'checked'
+            def_sweetness = ['']*6
+            def_cool = ['']*6
+            def_gain = ['']*6
+            def_sweetness[sweetness] = 'checked'
+            def_cool[cool] = 'checked'
+            def_gain[gain] = 'checked'
             return render_template('edit_evaluation.html', cid=cid, def_sweetness=def_sweetness, def_cool=def_cool,
                                    def_gain=def_gain,
                                    description=description)
