@@ -4,7 +4,11 @@
     <br>
     <div class="container-fluid" style="padding-top:20px; padding-bottom:20px; padding-left:100px; padding-right:100px;">
         <h5><span class="badge bg-info text-dark">{{ serial_no }}</span></h5>
-        <h2 style=""> {{ year }}-{{ term }} {{department}} - {{course_name}} ( {{ course_code }} ) </h2>
+        {% if nodata %}
+            <h2 style="">無課程資料 <(_ _)></h2>
+        {% else %}
+            <h2 style="">{{ year }}-{{ term }} {{department}} - {{course_name}} ( {{ course_code }} )</h2>
+        {% endif %}
         <br>
         <p>課程資訊</p>
         <hr style="height:3px;border-width:0;background-color:#46A3FF">
@@ -12,25 +16,89 @@
         <div class="row">
             <div class="col">
                 <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:30px; padding-right:30px;">
-                    <div class="row"><span>授課教師 : {{instructor}}</span></div>
-                    <div class="row"><span>必\選修 : {{reg_sel}}</span></div>
-                    <div class="row"><span>學分數 : {{ credits }}</span></div>
-                    <div class="row"><span>英語授課 : {{english}}</span></div>
+                    <div class="row">
+                        {% if instructor %}
+                            <span>授課教師 : {{instructor}}</span>
+                        {% else %}
+                            <span>授課教師 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if reg_sel %}
+                            <span>必\選修 : {{reg_sel}}</span>
+                        {% else %}
+                            <span>必\選修 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if credits %}
+                            <span>學分數 : {{ credits }}</span>
+                        {% else %}
+                            <span>學分數 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if english %}
+                            <span>英語授課 : {{english}}</span>
+                        {% else %}
+                            <span>英語授課 :</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="col">
                 <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:30px; padding-right:30px;">
-                    <div class="row"><span>限修人數 : {{ quota }}</span></div>
-                    <div class="row"><span>授權碼名額 : {{ authorize_quota }}</span></div>
-                    <div class="row"><span>系統開放人數 : {{ interschool_quota }}</span></div>
-                    <div class="row"><span>限修條件 : {{restrict}}</span></div>
+                    <div class="row">
+                        {% if quota %}
+                            <span>限修人數 : {{ quota }}</span>
+                        {% else %}
+                            <span>限修人數 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if authorize_quota %}
+                            <span>授權碼名額 : {{ authorize_quota }}</span>
+                        {% else %}
+                            <span>授權碼名額 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if interschool_quota %}
+                            <span>系統開放人數 : {{ interschool_quota }}</span>
+                        {% else %}
+                            <span>系統開放人數 :</span>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if restrict %}
+                            <span>限修條件 : {{restrict}}</span>
+                        {% else %}
+                            <span>限修條件 :</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
         <br>
         <div class="container-fluid" style="background:#E0F4FF; border-radius:10px; padding-top:20px; padding-bottom:20px; padding-left:30px; padding-right:30px;">
-            <div class="row"><span>上課時間地點 : {{ time }}, {{ location }}</span></div>
-            <div class="row"><span>備註 : {{note}}</span></div>
+            <div class="row">
+                {% if time and location %}
+                    <span>上課時間地點 : {{ time }}, {{ location }}</span>
+                {% elif time %}
+                    <span>課時間地點 : {{ time }}</span>
+                {% elif location %}
+                    <span>課時間地點 : {{ location }}</span>
+                {% else %}
+                    <span>課時間地點 :</span>
+                {% endif %}
+            </div>
+            <div class="row">
+                {% if note %}
+                    <span>備註 : {{note}}</span>
+                {% else %}
+                    <span>備註 :</span>
+                {% endif %}
+            </div>
         </div>
         </div>
         <br>
@@ -46,7 +114,7 @@
                              {% if avg_sweetness %}
                                  <span style="text-align:center">{{ '%.2f'|format(avg_sweetness) }}</span>
                              {% else %}
-                                 <span style="text-align:center">尚無評價</span>
+                                 <span style="text-align:center">尚無評分</span>
                              {% endif %}
                          </div>
                     </div>
@@ -56,7 +124,7 @@
                              {% if avg_cool %}
                                  <span style="text-align:center">{{ '%.2f'|format(avg_cool) }}</span>
                              {% else %}
-                                 <span style="text-align:center">尚無評價</span>
+                                 <span style="text-align:center">尚無評分</span>
                              {% endif %}
                         </div>
                     </div>
@@ -66,7 +134,7 @@
                              {% if avg_gain %}
                                  <span style="text-align:center">{{ '%.2f'|format(avg_gain) }}</span>
                              {% else %}
-                                 <span style="text-align:center">尚無評價</span>
+                                 <span style="text-align:center">尚無評分</span>
                              {% endif %}
                         </div>
                     </div>
@@ -75,9 +143,14 @@
         </div>
         <br>
         <br>
-        <div class="btn-group btn-sm pull-right" role="group" aria-label="add or edit" style="float:right">
-            <a href="/course/add/{{ cid }}" class="btn btn-info" role="button">新增評價</a>
-            <a href="/course/edit/{{ cid }}" class="btn btn-info" role="button">編輯評價</a>
+        <div class="btn-group btn-sm" role="group" aria-label="add or edit" style="float:right">
+            {% if button_disable %}
+                <a href="/course/add/{{ cid }}" class="btn btn-primary btn-info disabled" role="button" aria-disabled="true">新增評價</a>
+                <a href="/course/edit/{{ cid }}" class="btn btn-primary btn-info disabled" role="button" aria-disabled="true">編輯評價</a>
+            {% else %}
+                <a href="/course/add/{{ cid }}" class="btn btn-info" role="button" aria-disabled={{ button_disable }}>新增評價</a>
+                <a href="/course/edit/{{ cid }}" class="btn btn-info" role="button" aria-disabled={{ button_disable }}>編輯評價</a>
+            {% endif %}
         </div>
         <br>
         <p>課程評價</p>
