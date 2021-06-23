@@ -12,13 +12,14 @@ def user_form_validation(email, password, repeat_password, username=None):
     if username is not None and not re.match(r"^\w{1,12}$", username):
         flash('帳號未輸入或是格式錯誤', 'error')
         error = True
-        if User.query.filter_by(email=email).first():
-            flash('帳號與其他帳號重複', 'error')
-            error = True
 
     if email is not None:
         if not re.match(r".+@.+\..+", email):
             flash('Email 未輸入或是格式錯誤', 'error')
+            error = True
+
+        if User.query.filter_by(email=email).first():
+            flash('Email 與其他帳號重複', 'error')
             error = True
 
     if (password is not None or repeat_password is not None) and \
