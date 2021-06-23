@@ -1,1 +1,1 @@
-gunicorn --bind=0.0.0.0:80 app:app
+gunicorn --bind=0.0.0.0:5000 app:app
