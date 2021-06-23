@@ -114,8 +114,8 @@ def profile():
         if not error:
             user.email = data.get('email') if data.get('email') else user.email
             user.password = data.get('password') if data.get('password') else user.password
-            user.dept_name = data.get('dept') if data.get('dept') else user.dept_name
-            user.grade = data.get('grade') if data.get('grade') else user.grade
+            user.dept_name = data.get('dept') if data.get('dept') is not None else user.dept_name
+            user.grade = data.get('grade') if data.get('grade') is not None else user.grade
             db.session.commit()
             flash('更新資料完成', 'success')
             return redirect(url_for('index'))

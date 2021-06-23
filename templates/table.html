@@ -200,7 +200,7 @@
                             <div class="dept">
                                 <div class="row">
                                     <div class="col-9" style="color:#7083CE"> <span>{{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                    <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                             <div class="dept">
                                 <div class="row">
                                     <div class="col-9" style="color:#7083CE"> <span>科目代碼: {{ course.serial_no }} / {{ course.instructor }} / {{ course.credits }} 學分</span></div>
-                                    <div class="col"><button type="button" class="btn btn-info btn-sm" style=""><span style="color: aliceblue">課程資料</span></button></div>
+                                    <div class="col"><a type="button" class="btn btn-info btn-sm" target="_blank" href="{{ url_for('evaluation_bp.view', cid=course.cid) }}" style=""><span style="color: aliceblue">課程資料</span></a></div>
                                 </div>
                             </div>
                         </div>
