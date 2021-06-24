@@ -13,7 +13,7 @@ def get_credits(user):
     credit = [0, 0, 0]
     for course in user.courses:
         credit[0] += course.credits
-        if user.dept_name is not None and course.department.find(user.dept_name) != -1:
+        if user.dept_name != '' and course.department.find(user.dept_name) != -1:
             credit[1] += course.credits
         elif course.dept_code == 'GU':
             credit[2] += course.credits
