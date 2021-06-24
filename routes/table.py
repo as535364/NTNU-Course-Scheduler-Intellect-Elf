@@ -49,10 +49,13 @@ def parse_course_time(courses):
 
     for course in courses:
         # 有兩筆時間要處理
-        hole_time = spilt_time(course.time)
-        for time in hole_time:
-            for i in range(int(time[1]), int(time[2]) + 1):
-                table[time[0]][i].append(course)
+        if course.time != '':
+            hole_time = spilt_time(course.time)
+            for time in hole_time:
+                for i in range(int(time[1]), int(time[2]) + 1):
+                    table[time[0]][i].append(course)
+        else:
+            continue
 
     return table
 
