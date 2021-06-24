@@ -49,7 +49,7 @@ def parse_course_time(courses):
 
     for course in courses:
         # 有兩筆時間要處理
-        if course.time != '':
+        if course.time != '' and course.time is not None:
             hole_time = spilt_time(course.time)
             for time in hole_time:
                 for i in range(int(time[1]), int(time[2]) + 1):
