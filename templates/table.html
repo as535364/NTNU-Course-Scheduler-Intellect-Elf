@@ -112,7 +112,7 @@
                                                 {% if course.reg_sel == "通"%}
                                                     <div class="C_course">{{ course.course_name }} </div>
                                                 {% else %}
-                                                    {%if course.department == user_dept %}
+                                                    {%if user_dept == course.dept_code %}
                                                         <div class="A_course">{{ course.course_name }} </div>
                                                     {% else %}
                                                         <div class="B_course">{{ course.course_name }} </div>
@@ -134,7 +134,7 @@
                                                 {% if course.reg_sel == "通"%}
                                                     <div class="C_course">{{ course.course_name }} </div>
                                                 {% else %}
-                                                    {%if course.department == user_dept %}
+                                                    {%if user_dept == course.dept_code %}
                                                         <div class="A_course">{{ course.course_name }} </div>
                                                     {% else %}
                                                         <div class="B_course">{{ course.course_name }} </div>
