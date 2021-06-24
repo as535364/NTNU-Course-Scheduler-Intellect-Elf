@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block title %}登入{% endblock title%}
 {% block content %}
+    <style>
+        #back
+        {
+            background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            {#opacity: 0.5;#}
+        }
+
+    </style>
+    <body  id = "back" style="position: relative">
     <form action="{{ url_for('user_bp.login') }}" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">帳號</label>
@@ -12,4 +21,5 @@
       </div>
       <button type="submit" class="btn btn-primary">登入</button>
     </form>
+    </body>
 {% endblock content %}

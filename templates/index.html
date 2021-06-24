@@ -1,2 +1,23 @@
 {% extends "base.html" %}
+{% block head %}
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+{% endblock head %}
 {% block title %}首頁{% endblock title%}
+{% block content %}
+
+    <style>
+    #back
+    {
+        background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    }
+
+    </style>
+    <body id = "back" style="position: relative">
+        <div class="fade-in-words" >
+            <div class="first-words" style="font-size: 50px; color: #FFFF; margin-top: 200px; position: absolute">選課小幫手</div>
+            <div class="second-words" style="font-size: 25px; color: #FFFF;margin-top: 280px; margin-left: 70px; position: absolute" >請先登入</div>
+            <div class="third-words" style="font-size: 25px; color: #FFFF;margin-top: 320px;margin-left: 10px;position: absolute" >已登入者請點選排課</div>
+        </div>
+    </body>
+
+{% endblock content %}
