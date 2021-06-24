@@ -13,21 +13,30 @@ def get_credits(user):
     credit = [0, 0, 0]
     for course in user.courses:
         credit[0] += course.credits
-        if user.dept_name is not None and course.department == user.dept_name:
+        if user.dept_name is not None and course.department.find(user.dept_name) != -1:
             credit[1] += course.credits
         elif course.dept_code == 'GU':
             credit[2] += course.credits
     return credit
 
 def spilt_time(s):
-    t = str(s).split(' ')
+    hole_time = []
     dic = {'一': 0, '二': 1, '三': 2, '四': 3, '五': 4, '六': 5, 'A': 11, 'B': 12, 'C': 13, 'D': 14 }
-    day = dic[t[0]]
-    time = t[1].split('-')
-    start = dic[time[0]] if time[0].isalpha() else time[0]
-    end = dic[time[1]] if time[1].isalpha() else time[1]
+    a = str(s).split(',')
+    # 分兩段
+    for b in a:
+        t = str(b).split(' ')
+        day = dic[t[0]]
+        if t[1].find('-') != -1:
+            time = t[1].split('-')
+            start = dic[time[0]] if time[0].isalpha() else time[0]
+            end = dic[time[1]] if time[1].isalpha() else time[1]
+        else:
+            start = dic[t[1]] if t[1].isalpha() else t[1]
+            end = dic[t[1]] if t[1].isalpha() else t[1]
+        hole_time.append([day, start, end])
 
-    return day, start, end
+    return hole_time
 
 
 def parse_course_time(courses):
@@ -39,12 +48,12 @@ def parse_course_time(courses):
             table[j].append([])
 
     for course in courses:
-        day, start, end = spilt_time(course.time)
-        for i in range( int(start), int(end)+1 ):
-            # print(i)
-            table[day][i].append(course)
-    #     print(int(time[0]),int(time[1]))
-    # print(table)
+        # 有兩筆時間要處理
+        hole_time = spilt_time(course.time)
+        for time in hole_time:
+            for i in range(int(time[1]), int(time[2]) + 1):
+                table[time[0]][i].append(course)
+
     return table
 
 
@@ -75,15 +84,14 @@ def table(user):
     courses, dept_name_code = get_all_courses_code()
     user_course = user.courses
     allcourses = Course.query.limit(100).all()
-    # parse_course_time(user_course)
 
     table = parse_course_time(user_course)
-    user_dept = user.dept_name
+
+    tmp = Course.query.filter(Course.department.contains(user.dept_name)).first()
+    user_dept = tmp.dept_code
 
     return render_template('table.html', db_dept=dept_name_code, course_searched=allcourses, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, checked = None )
 
-
-# return redirect(url_for("login"))
 
 
 @table_bp.route('/add', methods=['POST'])
@@ -91,6 +99,9 @@ def table(user):
 def add_course(user):
     user_course = user.courses
     courses, dept_name_code = get_all_courses_code()
+
+    tmp = Course.query.filter(Course.department.contains(user.dept_name)).first()
+    user_dept = tmp.dept_code
     if request.method == 'POST':
         course_to_be_add = Course.query.filter_by(cid=request.form.get('cid')).first()
         if course_to_be_add not in user.courses:
@@ -99,7 +110,8 @@ def add_course(user):
             # print(course_to_be_add.course_name)
         credit = get_credits(user)
         table = parse_course_time(user_course)
-        user_dept = user.dept_name
+
+
         return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, sortchecked = None)
 
 
@@ -117,7 +129,9 @@ def remove_course(user):
             # print(course_to_be_remove.course_name)
         credit = get_credits(user)
         table = parse_course_time(user_course)
-        user_dept = user.dept_name
+
+        tmp = Course.query.filter(Course.department.contains(user.dept_name)).first()
+        user_dept = tmp.dept_code
         return render_template('table.html', db_dept=dept_name_code, user_course=user_course, credit=credit, table=table, user_dept=user_dept , change_color = None, sortchecked = None)
 
 
@@ -129,7 +143,6 @@ def search_course(user):
     courses, dept_name_code = get_all_courses_code()
     user_course = user.courses
     table = parse_course_time(user_course)
-    user_dept = user.dept_name
     if request.method == 'POST':
 
         dept_code = request.values['dept'] if request.values['dept'] != '開課系所' else None
@@ -177,8 +190,10 @@ def search_course(user):
         for course in (s_course):
             sort_course_searched.append(course[0])
         # print(sort_course_searched)
-        return render_template('table.html', course_searched=sort_course_searched, db_dept=dept_name_code, condi=condition,
-                               dept_selected=dept_name_code.get(dept_code), user_course=user_course, credit=credit, table=table, user_dept=user_dept, change_color = None, sortchecked = request.form['check-sort'])
+        tmp = Course.query.filter(Course.department.contains(user.dept_name)).first()
+        user_dept = tmp.dept_code
+        return render_template('table.html',user_dept=user_dept, course_searched=sort_course_searched, db_dept=dept_name_code, condi=condition,
+                               dept_selected=dept_name_code.get(dept_code), user_course=user_course, credit=credit, table=table, change_color = None, sortchecked = request.form['check-sort'])
 
 
 @table_bp.route('/get_table', methods=['GET'])
@@ -188,16 +203,16 @@ def get_table_course(user):
     courses, dept_name_code = get_all_courses_code()
     user_course = user.courses
     table = parse_course_time(user_course)
-    user_dept = user.dept_name
+    tmp = Course.query.filter(Course.department.contains(user.dept_name)).first()
+    user_dept = tmp.dept_code
+
     if request.method == 'GET':
     # 選課志願
         # print(request.args.get('day'))
         time = request.args.get('day')
-        # print(time)
         t = time.split('-')
         # print(t[0], t[1])
         user_course = table[int(t[0])-1][int(t[1])]
-        # print(user_course)
 
         tmp = [int(t[0]), int(t[1])]
         color_block = []
