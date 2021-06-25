@@ -3,7 +3,7 @@
 ## NTNUCSIE
 
 
-### Install
+### 安裝與執行
 
 需要 Python3
 
